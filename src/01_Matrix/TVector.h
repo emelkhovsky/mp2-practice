@@ -32,6 +32,7 @@ public:
 	ValType Size() const;
 	int StartIndex()const;
 	ValType& operator [](int index);
+	const ValType& operator [](int index) const;
 
 	friend ostream& operator<<(ostream& out, const TVector& vector) {
 		if (vector.size == 0) {
@@ -178,6 +179,13 @@ int TVector<ValType>::StartIndex() const {
 
 template<typename ValType>//перегрузка []
 ValType& TVector<ValType>:: operator [] (int index) {
+	if((index < 0)||(index >= size))
+		throw vectorincorrectindexerror();
+	return  elements[index];
+}
+
+template<typename ValType>//перегрузка []
+const ValType& TVector<ValType>:: operator [] (int index) const {
 	if((index < 0)||(index >= size))
 		throw vectorincorrectindexerror();
 	return  elements[index];

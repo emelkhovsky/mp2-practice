@@ -66,7 +66,7 @@ template <typename ValType>//оператор равенства
 bool TMatrix<ValType>::operator == (const TMatrix& matrix) const {
 	if (this->size != matrix.size)
 		return false;
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < this->size; i++)
 		if (this->elements[i] != matrix.elements[i])
 			return false;
 	return true;
@@ -142,34 +142,31 @@ template<typename ValType>//умножение матрицы на матрицу
 TMatrix<ValType> TMatrix<ValType>:: operator * (const TMatrix& matrix) {
 	if (this->size != matrix.size)
 		throw matrixsizeerror();
-	TMatrix<ValType> dop(*this);
-	for (int i = 0; i < dop.size; i++)
-	{
-		int flag = 1;
-		int start = matrix.elements[i].StartIndex();
-		for (int j = start; j < dop.size; j++)
-		{
-			dop.elements[i][j] = ValType(0);
-			for (int k = 0; k < flag; k++)
-				dop.elements[i][j] = dop.elements[i][j] + this->elements[i][k + i] * dop.elements[k + i][j];
-			flag++;
+	TMatrix<ValType> dop(this->size);
+	for (int i = 0; i < this->size; i++)
+		for (int j = this->elements[i].StartIndex(); j < this->size; j++) {
+			dop.elements[i][j - i] = 0;
+			for (int k = i; k <= j; k++) {
+				dop.elements[i][j - i] = dop.elements[i][j - i] + this->elements[i][k - i] * matrix.elements[k][j - k];
+			}
 		}
-	}
-
 
 	return dop;
 }
 
-template<typename ValType>//умножение матрицы на вектор
+template<typename ValType>//умножение матрицы   на вектор
 TVector<ValType> TMatrix<ValType>:: operator * (const TVector<ValType> & vector) {
-	if (size != vector.size)
+	if (this->size != vector.Size())
 		throw matrixsizeerror();
-	TVector<ValType> dop;
-	for (int i = 0; i < size; i++) {
-		dop.elements[i] = 0;
+	TVector<ValType> dop(this->size);
+	for (int i = 0; i < this->size; i++) {
+		dop[i] = 0;
 		int start = this->elements[i].StartIndex();
-		for (int j = start; j < size; j++) {
-			dop.elements[i] = dop.elements[i] + this->elements[i][j] * vector.elements[j];
+		cout << "s1"<<start << endl;
+		for (int j = 0; j < this->elements[i].Size(); j++) {
+			cout << "j:" << j << endl;
+			cout << dop[i] << "+" << this->elements[i][j] << "*"<<vector[j]<<endl;
+			dop[i] = dop[i] + this->elements[i][j] * vector[j];
 		}
 	}
 	return dop;

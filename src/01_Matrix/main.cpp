@@ -9,17 +9,18 @@ using namespace std;
 
 void main() {
 	/*-------------------------ЧАСТЬ_С_ВЕКТОРАМИ--------------------------*/
-	/*TVector<int> a(3);
+	TVector<int> a(3);
 	TVector<int> b(3);
 	TVector<int> c(4);
 	TVector<int> d(0);
 	TVector<int> rez;
-	float rez_umnosh;*/
+	float rez_umnosh;
 	TMatrix<int> am(3);
 	TMatrix<int> bm(3);
 	TMatrix<int> cm(3);
 	TMatrix<int> dm(0);
-
+	TMatrix<int> em(2);
+	
 	int cc = 10;
 	setlocale(LC_ALL, "Rus");
 	/*
@@ -87,7 +88,7 @@ void main() {
 		cout << e.what() << endl;
 	}*/
 	/*-------------------------ЧАСТЬ_С_МАТРИЦАМИ--------------------------*/
-
+	try {
 	//ввод матриц
 	cout << "Введите матрицу am" << endl;
 	cin >> am;
@@ -107,8 +108,36 @@ void main() {
 	cm = am * bm;
 	cout << cm;
 
-	//вывод нулевого вектора
+	//неравенства
+	if (am != bm) {
+		cout << "am не равно bm" << endl;
+	}
+	cout << "приравняем am = bm:";
+	am = bm;
+	if (am == bm) {
+		cout << "am равно bm" << endl;
+	}
+	//сложение матриц разных размерностей
+		cout << "сложение матриц разных размерностей am + em:";
+		cm = am + em;
+
+	}
+	catch (matrixsizeerror e) {
+		cout << e.what() << endl;
+	}
+
 	try {
+	//операции с константами
+	cout << "am + const" << endl;
+	cm = am + cc;
+	cout << cm;
+	cout << "am - const" << endl;
+	cm = am - cc;
+	cout << cm;
+	cout << "am * const" << endl;
+	cm = am * cc;
+	cout << cm;
+	//вывод матрицы размера 0
 		cout << "вывод нулевой матрицы dm(0):";
 		cout << dm;
 
@@ -117,7 +146,18 @@ void main() {
 		cout << e.what() << endl;
 	}
 
+	//умножение вектора на матрицы
+	try {
+		cin >> a;
+		cout << "bm * a: " << bm * a << endl;
+		cout << a << endl;
+		cin >> c;
+		cout << "am * c: " << am * c <<endl;
 
+	}
+	catch (matrixzerosizeerror e) {
+		cout << e.what() << endl;
+	}
 
 
 
