@@ -1,4 +1,4 @@
-#ifndef _EXCEPTIONS_H_
+п»ї#ifndef _EXCEPTIONS_H_
 #define _EXCEPTIONS_H_
 
 #include <iostream>
@@ -8,43 +8,51 @@
 using namespace std;
 
 class vectorsizeerror : public std::exception{
-	const std::string what_Str = "размеры векторов не совпадают\n";
+    const std::string what_Str = "СЂР°Р·РјРµСЂС‹ РІРµРєС‚РѕСЂРѕРІ РЅРµ СЃРѕРІРїР°РґР°СЋС‚\n";
 public:
-	const char* what() const{
-		return what_Str.c_str();
-	}
+    const char* what() const{
+        return what_Str.c_str();
+    }
 };
 
 class matrixsizeerror : public std::exception{
-	const std::string what_Str = "размеры матриц не совпадают\n";
+    const std::string what_Str = "СЂР°Р·РјРµСЂС‹ РјР°С‚СЂРёС† РЅРµ СЃРѕРІРїР°РґР°СЋС‚\n";
 public:
-	const char* what() const{
-		return what_Str.c_str();
-	}
+    const char* what() const{
+        return what_Str.c_str();
+    }
 };
 
 class vectorincorrectindexerror : public std::exception{
-	const std::string what_Str = "неккоректный номер индекса\n";
+    const std::string what_Str = "РЅРµРєРєРѕСЂРµРєС‚РЅС‹Р№ РЅРѕРјРµСЂ РёРЅРґРµРєСЃР°\n";
 public:
-	const char* what() const{
-		return what_Str.c_str();
-	}
+    const char* what() const{
+        return what_Str.c_str();
+    }
 };
 
 class vectorzerosizeerror : public std::exception {
-	const std::string what_Str = "вектор нулевого размера, не могу вывести\n";
+    const std::string what_Str = "РІРµРєС‚РѕСЂ РЅСѓР»РµРІРѕРіРѕ СЂР°Р·РјРµСЂР°, РЅРµ РјРѕРіСѓ РІС‹РІРµСЃС‚Рё\n";
 public:
-	const char* what() const {
-		return what_Str.c_str();
-	}
+    const char* what() const {
+        return what_Str.c_str();
+    }
 };
 
 class matrixzerosizeerror : public std::exception {
-	const std::string what_Str = "матрицы нулевого размера, не могу вывести\n";
+    const std::string what_Str = "РјР°С‚СЂРёС†С‹ РЅСѓР»РµРІРѕРіРѕ СЂР°Р·РјРµСЂР°, РЅРµ РјРѕРіСѓ РІС‹РІРµСЃС‚Рё\n";
 public:
-	const char* what() const {
-		return what_Str.c_str();
-	}
+    const char* what() const {
+        return what_Str.c_str();
+    }
+};
+
+class matrixvectorsizeerror : public std::exception {
+    const std::string what_Str = "СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ РІРµРєС‚РѕСЂР° Рё РјР°С‚СЂРёС†С‹ РЅРµ СЃРѕРІРїР°РґР°СЋС‚, РѕРїРµСЂР°С†РёСЏ РЅРµ РІРѕР·РјРѕР¶РЅР°\n";
+public:
+    const char* what() const {
+        return what_Str.c_str();
+    }
 };
 
 #endif

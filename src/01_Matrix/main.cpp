@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <locale.h>
 
 #include "exception.h"
@@ -8,159 +8,159 @@
 using namespace std;
 
 void main() {
-	/*-------------------------ЧАСТЬ_С_ВЕКТОРАМИ--------------------------*/
-	TVector<int> a(3);
-	TVector<int> b(3);
-	TVector<int> c(4);
-	TVector<int> d(0);
-	TVector<int> rez;
-	float rez_umnosh;
-	TMatrix<int> am(3);
-	TMatrix<int> bm(3);
-	TMatrix<int> cm(3);
-	TMatrix<int> dm(0);
-	TMatrix<int> em(2);
-	
-	int cc = 10;
-	setlocale(LC_ALL, "Rus");
-	/*
-	//ввод векторов
-	cout << "Введите вектор a" << endl;
-	cin >> a;
-	cout << a << endl;
-	cout << "Введите вектор b" << endl;
-	cin >> b;
-	cout << b << endl;
-	
-	//вывод нулевого вектора
-	try {
-		cout << "вектор d(0):";
-		cout << d;
+    /*-------------------------вЂћСвЂ”вЂњв„–_вЂ”_В¬в‰€В вЂњСњвЂ“СС›В»--------------------------*/
+    TVector<int> a(3);
+    TVector<int> b(3);
+    TVector<int> c(4);
+    TVector<int> d(0);
+    TVector<int> rez;
+    float rez_umnosh;
+    TMatrix<int> am(3);
+    TMatrix<int> bm(3);
+    TMatrix<int> cm(3);
+    TMatrix<int> dm(0);
+    TMatrix<int> em(2);
+    int cc = 10;
+    setlocale(LC_ALL, "Rus");
 
-	}
-	catch (vectorzerosizeerror e) {
-		cout << e.what() << endl;
-	}
+    //РІРІРѕРґ РІРµРєС‚РѕСЂРѕРІ
+    cout << "В¬РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ a" << endl;
+    cin >> a;
+    cout << a << endl;
+    cout << "В¬РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ b" << endl;
+    cin >> b;
+    cout << b << endl;
+    
+    //РІС‹РІРѕРґ РЅСѓР»РµРІРѕРіРѕ РІРµРєС‚РѕСЂР°
+    try {
+        cout << "РІРµРєС‚РѕСЂ d(0):";
+        cout << d;
 
-	//операции с векторами
-	try {
-		rez = a - b;
-		cout << "a - b:\n"<< rez << endl;
-		rez = a + b;
-		cout << "a + b:\n" << rez << endl;	
-		cout << "a * c:\n" << endl;
-		rez_umnosh = a * c;
-		
-	}
-	catch (vectorsizeerror e){
-		cout << e.what() << endl;
-	}
-	
-	//операции с константами
-	rez = a + cc;
-	cout << "a + 10:\n" << rez << endl;
-	rez = a - cc;
-	cout << "a - 10:\n" << rez << endl;
-	rez = a * cc;
-	cout << "a * 10:\n" << rez << endl;
+    }
+    catch (vectorzerosizeerror e) {
+        cout << e.what() << endl;
+    }
 
-	//операции сравнения
-	if (a != b) {
-		cout << "a не равно b" << endl;
-	}
-	cout << "приравняем a = b:";
-	a = b;
-	if (a == b) {
-		cout << "a равно b" << endl;
-	}
+    //РѕРїРµСЂР°С†РёРё СЃ РІРµРєС‚РѕСЂР°РјРё
+    try {
+        rez = a - b;
+        cout << "a - b:\n"<< rez << endl;
+        rez = a + b;
+        cout << "a + b:\n" << rez << endl;    
+        cout << "a * c:\n" << endl;
+        rez_umnosh = a * c;
+        
+    }
+    catch (vectorsizeerror e){
+        cout << e.what() << endl;
+    }
+    
+    //РѕРїРµСЂР°С†РёРё СЃ РєРѕРЅСЃС‚Р°РЅС‚Р°РјРё
+    rez = a + cc;
+    cout << "a + 10:\n" << rez << endl;
+    rez = a - cc;
+    cout << "a - 10:\n" << rez << endl;
+    rez = a * cc;
+    cout << "a * 10:\n" << rez << endl;
 
-	//длина вектора
-	cout << "длина вектора a:" << a.Lenght() << endl;
+    //РѕРїРµСЂР°С†РёРё СЃСЂР°РІРЅРµРЅРёВ¤
+    if (a != b) {
+        cout << "a РЅРµ СЂР°РІРЅРѕ b" << endl;
+    }
+    cout << "РїСЂРёСЂР°РІРЅВ¤РµРј a = b:";
+    a = b;
+    if (a == b) {
+        cout << "a СЂР°РІРЅРѕ b" << endl;
+    }
 
-	//индекс вектора
-	try {
-		cout << "a[0]:" << a[0] << endl;
-		cout << "a[-1]:" << endl;
-		cout << a[-1] << endl;
+    //РґР»РёРЅР° РІРµРєС‚РѕСЂР°
+    cout << "РґР»РёРЅР° РІРµРєС‚РѕСЂР° a:" << a.Lenght() << endl;
 
-	}
-	catch (vectorincorrectindexerror e) {
-		cout << e.what() << endl;
-	}*/
-	/*-------------------------ЧАСТЬ_С_МАТРИЦАМИ--------------------------*/
-	try {
-	//ввод матриц
-	cout << "Введите матрицу am" << endl;
-	cin >> am;
-	cout << am << endl;
-	cout << "Введите матрицу bm" << endl;
-	cin >> bm;
-	cout << bm << endl;
+    //РёРЅРґРµРєСЃ РІРµРєС‚РѕСЂР°
+    try {
+        cout << "a[0]:" << a[0] << endl;
+        cout << "a[-1]:" << endl;
+        cout << a[-1] << endl;
 
-	//операции с матрицами
-	cout << "am + bm" << endl;
-	cm = am + bm;
-	cout << cm;
-	cout << "am - bm" << endl;
-	cm = am - bm;
-	cout << cm;
-	cout << "am * bm" << endl;
-	cm = am * bm;
-	cout << cm;
+    }
+    catch (vectorincorrectindexerror e) {
+        cout << e.what() << endl;
+    }
+    /*-------------------------вЂћСвЂ”вЂњв„–_вЂ”_С›СвЂњвЂ“В»Г·СС›В»--------------------------*/
+    try {
+    //РІРІРѕРґ РјР°С‚СЂРёС†
+    cout << "В¬РІРµРґРёС‚Рµ РјР°С‚СЂРёС†Сѓ am" << endl;
+    cin >> am;
+    cout << am << endl;
+    cout << "В¬РІРµРґРёС‚Рµ РјР°С‚СЂРёС†Сѓ bm" << endl;
+    cin >> bm;
+    cout << bm << endl;
 
-	//неравенства
-	if (am != bm) {
-		cout << "am не равно bm" << endl;
-	}
-	cout << "приравняем am = bm:";
-	am = bm;
-	if (am == bm) {
-		cout << "am равно bm" << endl;
-	}
-	//сложение матриц разных размерностей
-		cout << "сложение матриц разных размерностей am + em:";
-		cm = am + em;
+    //РѕРїРµСЂР°С†РёРё СЃ РјР°С‚СЂРёС†Р°РјРё
+    cout << "am + bm" << endl;
+    cm = am + bm;
+    cout << cm;
+    cout << "am - bm" << endl;
+    cm = am - bm;
+    cout << cm;
+    cout << "am * bm" << endl;
+    cm = am * bm;
+    cout << cm;
 
-	}
-	catch (matrixsizeerror e) {
-		cout << e.what() << endl;
-	}
+    //РЅРµСЂР°РІРµРЅСЃС‚РІР°
+    if (am != bm) {
+        cout << "am РЅРµ СЂР°РІРЅРѕ bm" << endl;
+    }
+    cout << "РїСЂРёСЂР°РІРЅВ¤РµРј am = bm:";
+    am = bm;
+    if (am == bm) {
+        cout << "am СЂР°РІРЅРѕ bm" << endl;
+    }
 
-	try {
-	//операции с константами
-	cout << "am + const" << endl;
-	cm = am + cc;
-	cout << cm;
-	cout << "am - const" << endl;
-	cm = am - cc;
-	cout << cm;
-	cout << "am * const" << endl;
-	cm = am * cc;
-	cout << cm;
-	//вывод матрицы размера 0
-		cout << "вывод нулевой матрицы dm(0):";
-		cout << dm;
+    //СЃР»РѕР¶РµРЅРёРµ РјР°С‚СЂРёС† СЂР°Р·РЅС‹С… СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№
+        cout << "СЃР»РѕР¶РµРЅРёРµ РјР°С‚СЂРёС† СЂР°Р·РЅС‹С… СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№ am + em:";
+        cm = am + em;
 
-	}
-	catch (matrixzerosizeerror e) {
-		cout << e.what() << endl;
-	}
+    }
+    catch (matrixsizeerror e) {
+        cout << e.what() << endl;
+    }
 
-	//умножение вектора на матрицы
-	try {
-		cin >> a;
-		cout << "bm * a: " << bm * a << endl;
-		cout << a << endl;
-		cin >> c;
-		cout << "am * c: " << am * c <<endl;
+    try {
 
-	}
-	catch (matrixzerosizeerror e) {
-		cout << e.what() << endl;
-	}
+    //РѕРїРµСЂР°С†РёРё СЃ РєРѕРЅСЃС‚Р°РЅС‚Р°РјРё
+    cout << "am + const" << endl;
+    cm = am + cc;
+    cout << cm;
+    cout << "am - const" << endl;
+    cm = am - cc;
+    cout << cm;
+    cout << "am * const" << endl;
+    cm = am * cc;
+    cout << cm;
 
+    //РІС‹РІРѕРґ РјР°С‚СЂРёС†С‹ СЂР°Р·РјРµСЂР° 0
+        cout << "РІС‹РІРѕРґ РЅСѓР»РµРІРѕР№ РјР°С‚СЂРёС†С‹ dm(0):";
+        cout << dm;
 
+    }
+    catch (matrixzerosizeerror e) {
+        cout << e.what() << endl;
+    }
 
-	system("pause");
+    //СѓРјРЅРѕР¶РµРЅРёРµ РІРµРєС‚РѕСЂР° РЅР° РјР°С‚СЂРёС†С‹
+    try {
+        cout << "РІРІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ a СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё 3" << endl;
+        cin >> a;
+        cout << "bm * a: " << bm * a << endl;
+        cout << "РІРІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ a СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё 4" << endl;
+        cin >> c;
+        cout << "СѓРјРЅРѕР¶РµРЅРёРµ РјР°С‚СЂРёС†С‹ РЅР° РІРµРєС‚РѕСЂ РґСЂСѓРіРѕР№ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё: am * c: " << am * c <<endl;
+    }
+    catch (matrixvectorsizeerror e) {
+        cout << e.what() << endl;
+    }
+
+    system("pause");
 }
 

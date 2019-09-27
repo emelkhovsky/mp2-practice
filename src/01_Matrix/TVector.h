@@ -1,4 +1,4 @@
-#ifndef _TVECTOR_H_
+п»ї#ifndef _TVECTOR_H_
 #define _TVECTOR_H_
 
 #include <iostream>
@@ -9,186 +9,186 @@
 template <typename ValType>
 class TVector {
 protected:
-	int size;
-	int start_index;
-	ValType* elements;
+    int size;
+    int start_index;
+    ValType* elements;
 public:
-	TVector(int _size = 5, int _start_index = 0);//с параметрами
-	TVector(const TVector&);//копирования
-	~TVector();
+    TVector(int _size = 5, int _start_index = 0);//СЃ РїР°СЂР°РјРµС‚СЂР°РјРё
+    TVector(const TVector&);//РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+    ~TVector();
 
-	bool operator == (const TVector& ) const;
-	bool operator != (const TVector& ) const;
+    bool operator == (const TVector& ) const;
+    bool operator != (const TVector& ) const;
 
-	TVector& operator = (const TVector& );
-	TVector operator + (ValType);//с константами
-	TVector operator - (ValType);
-	TVector operator * (ValType);
-	TVector operator + (const TVector&);//с векторами
-	TVector operator - (const TVector&);
-	ValType operator * (const TVector&);
+    TVector& operator = (const TVector& );
+    TVector operator + (ValType);//СЃ РєРѕРЅСЃС‚Р°РЅС‚Р°РјРё
+    TVector operator - (ValType);
+    TVector operator * (ValType);
+    TVector operator + (const TVector&);//СЃ РІРµРєС‚РѕСЂР°РјРё
+    TVector operator - (const TVector&);
+    ValType operator * (const TVector&);
 
-	ValType Lenght() const;
-	ValType Size() const;
-	int StartIndex()const;
-	ValType& operator [](int index);
-	const ValType& operator [](int index) const;
+    ValType Lenght() const;
+    ValType Size() const;
+    int StartIndex()const;
+    ValType& operator [](int index);
+    const ValType& operator [](int index) const;
 
-	friend ostream& operator<<(ostream& out, const TVector& vector) {
-		if (vector.size == 0) {
-			throw vectorzerosizeerror();
-		}
-		for (int i = 0; i < vector.size; i++)
-			out << vector.elements[i] << ", ";
-		out << "\n";
-		return out;
+    friend ostream& operator<<(ostream& out, const TVector& vector) {
+        if (vector.size == 0) {
+            throw vectorzerosizeerror();
+        }
+        for (int i = 0; i < vector.size; i++)
+            out << vector.elements[i] << ", ";
+        out << "\n";
+        return out;
 
-	};
-	friend istream& operator>>(istream& in, TVector& vector) {
-		for (int i = 0; i < vector.size; i++) {
-			in >> vector.elements[i];
-		}
-		return in;
-	};
+    };
+    friend istream& operator>>(istream& in, TVector& vector) {
+        for (int i = 0; i < vector.size; i++) {
+            in >> vector.elements[i];
+        }
+        return in;
+    };
 };
 
-template <typename ValType>//конструктор с параметрами
+template <typename ValType>//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё
 TVector<ValType>::TVector(int _size, int _start_index) {
-	size = _size;
-	elements = new ValType[size];
-	start_index = _start_index;
+    size = _size;
+    elements = new ValType[size];
+    start_index = _start_index;
 }
 
-template <typename ValType>//конструктор копирования
+template <typename ValType>//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 TVector<ValType>::TVector(const TVector& vector) {
-	size = vector.size;
-	elements = new ValType[size];
-	start_index = vector.start_index;
-	for (int i = 0; i < size; i++) 
-		 elements[i] = vector.elements[i];
+    size = vector.size;
+    elements = new ValType[size];
+    start_index = vector.start_index;
+    for (int i = 0; i < size; i++) 
+         elements[i] = vector.elements[i];
 }
 
-template <typename ValType>//деструктор
+template <typename ValType>//РґРµСЃС‚СЂСѓРєС‚РѕСЂ
 TVector<ValType>::~TVector() {
-	size = 0;
-	delete[]  elements;
+    size = 0;
+    delete[]  elements;
 }
 
-template <typename ValType>//оператор равенства
+template <typename ValType>//РѕРїРµСЂР°С‚РѕСЂ СЂР°РІРµРЅСЃС‚РІР°
 bool TVector<ValType>::operator == (const TVector& vector) const {
-	if (size != vector.size)
-		return false;
-	for (int i = 0; i < size; i++) 
-		if ( elements[i] != vector.elements[i])
-			return false;
-	return true;
+    if (size != vector.size)
+        return false;
+    for (int i = 0; i < size; i++) 
+        if ( elements[i] != vector.elements[i])
+            return false;
+    return true;
 }
 
-template <typename ValType>//оператор неравенства
+template <typename ValType>//РѕРїРµСЂР°С‚РѕСЂ РЅРµСЂР°РІРµРЅСЃС‚РІР°
 bool TVector<ValType>::operator != (const TVector& vector) const {
-	return !(vector == *this);
+    return !(vector == *this);
 }
 
-template<typename ValType>//присваивание
+template<typename ValType>//РїСЂРёСЃРІР°РёРІР°РЅРёРµ
 TVector<ValType>& TVector<ValType>:: operator = (const TVector& vector) {
-	if (this == &vector)
-		return *this;
-	delete[]  elements;
-	size = vector.size;
-	start_index = vector.start_index;
-	 elements = new ValType [size];
-	for (int i = 0; i < size; i++) {
-		 elements[i] = vector.elements[i];
-	}
-	return *this;
+    if (this == &vector)
+        return *this;
+    delete[]  elements;
+    size = vector.size;
+    start_index = vector.start_index;
+     elements = new ValType [size];
+    for (int i = 0; i < size; i++) {
+         elements[i] = vector.elements[i];
+    }
+    return *this;
 }
 
-template<typename ValType>//сложение с const
+template<typename ValType>//СЃР»РѕР¶РµРЅРёРµ СЃ const
 TVector<ValType> TVector<ValType>:: operator + (ValType c) {
-	TVector<ValType> dop(size);
-	for (int i = 0; i < size; i++)
-			dop.elements[i] =  elements[i] + c;
-	return dop;
+    TVector<ValType> dop(size);
+    for (int i = 0; i < size; i++)
+            dop.elements[i] =  elements[i] + c;
+    return dop;
 }
 
-template<typename ValType>//вычитание с const
+template<typename ValType>//РІС‹С‡РёС‚Р°РЅРёРµ СЃ const
 TVector<ValType> TVector<ValType>:: operator - (ValType c) {
-	TVector<ValType> dop(size);
-	for (int i = 0; i < size; i++)
-		dop.elements[i] =  elements[i] - c;
-	return dop;
+    TVector<ValType> dop(size);
+    for (int i = 0; i < size; i++)
+        dop.elements[i] =  elements[i] - c;
+    return dop;
 }
 
-template<typename ValType>//умножение с const
+template<typename ValType>//СѓРјРЅРѕР¶РµРЅРёРµ СЃ const
 TVector<ValType> TVector<ValType>:: operator * (ValType c) {
-	TVector<ValType> dop(size);
-	for (int i = 0; i < size; i++)
-		dop.elements[i] =  elements[i] * c;
-	return dop;
+    TVector<ValType> dop(size);
+    for (int i = 0; i < size; i++)
+        dop.elements[i] =  elements[i] * c;
+    return dop;
 }
 
-template<typename ValType>//сложение 
+template<typename ValType>//СЃР»РѕР¶РµРЅРёРµ 
 TVector<ValType> TVector<ValType>:: operator + (const TVector& vector) {
-	if (size != vector.size)
-		throw vectorsizeerror();
-	TVector<ValType> dop(size);
-	for (int i = 0; i < size; i++) {
-			dop.elements[i] =  elements[i] + vector.elements[i];
-		}
-	return dop;
+    if (size != vector.size)
+        throw vectorsizeerror();
+    TVector<ValType> dop(size);
+    for (int i = 0; i < size; i++) {
+            dop.elements[i] =  elements[i] + vector.elements[i];
+        }
+    return dop;
 }
 
-template<typename ValType>//вычитание 
+template<typename ValType>//РІС‹С‡РёС‚Р°РЅРёРµ 
 TVector<ValType> TVector<ValType>:: operator - (const TVector& vector) {
-	if (size != vector.size)
-		throw vectorsizeerror();
-	TVector<ValType> dop(size);
-	for (int i = 0; i < size; i++)
-		dop.elements[i] =  elements[i] - vector.elements[i];
-	return dop;
+    if (size != vector.size)
+        throw vectorsizeerror();
+    TVector<ValType> dop(size);
+    for (int i = 0; i < size; i++)
+        dop.elements[i] =  elements[i] - vector.elements[i];
+    return dop;
 }
 
-template<typename ValType>//умножение
+template<typename ValType>//СѓРјРЅРѕР¶РµРЅРёРµ
 ValType TVector<ValType>:: operator * (const TVector& vector) {
-	if (size != vector.size)
-		throw vectorsizeerror();
-	ValType rez = 0;
-	for (int i = 0; i < size; i++)
-		rez = rez +  elements[i] * vector.elements[i];
-	return rez;
+    if (size != vector.size)
+        throw vectorsizeerror();
+    ValType rez = 0;
+    for (int i = 0; i < size; i++)
+        rez = rez +  elements[i] * vector.elements[i];
+    return rez;
 }
 
-template<typename ValType>//длина
+template<typename ValType>//РґР»РёРЅР°
 ValType TVector<ValType>:: Lenght () const {
-	ValType s = 0;
-	for (int i = 0; i < size; i++)
-		s = s +  elements[i] *  elements[i];
-	s = sqrt(s);
-	return s;
+    ValType s = 0;
+    for (int i = 0; i < size; i++)
+        s = s +  elements[i] *  elements[i];
+    s = sqrt(s);
+    return s;
 }
 
-template<typename ValType>//размер
+template<typename ValType>//СЂР°Р·РјРµСЂ
 ValType TVector<ValType>::Size() const {
-	return size;
+    return size;
 }
 
-template<typename ValType>//стартиндекс
+template<typename ValType>//СЃС‚Р°СЂС‚РёРЅРґРµРєСЃ
 int TVector<ValType>::StartIndex() const {
-	return start_index;
+    return start_index;
 }
 
-template<typename ValType>//перегрузка []
+template<typename ValType>//РїРµСЂРµРіСЂСѓР·РєР° []
 ValType& TVector<ValType>:: operator [] (int index) {
-	if((index < 0)||(index >= size))
-		throw vectorincorrectindexerror();
-	return  elements[index];
+    if((index < 0)||(index >= size))
+        throw vectorincorrectindexerror();
+    return  elements[index];
 }
 
-template<typename ValType>//перегрузка []
+template<typename ValType>//РїРµСЂРµРіСЂСѓР·РєР° []
 const ValType& TVector<ValType>:: operator [] (int index) const {
-	if((index < 0)||(index >= size))
-		throw vectorincorrectindexerror();
-	return  elements[index];
+    if((index < 0)||(index >= size))
+        throw vectorincorrectindexerror();
+    return  elements[index];
 }
 
 #endif
