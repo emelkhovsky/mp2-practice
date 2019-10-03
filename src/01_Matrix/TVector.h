@@ -57,6 +57,8 @@ TVector<ValType>::TVector(int _size, int _start_index) {
     size = _size;
     elements = new ValType[size];
     start_index = _start_index;
+	for (int i = 0; i < size; i++)
+		elements[i] = 0;
 }
 
 template <typename ValType>//конструктор копирования
@@ -93,10 +95,12 @@ template<typename ValType>//присваивание
 TVector<ValType>& TVector<ValType>:: operator = (const TVector& vector) {
     if (this == &vector)
         return *this;
-    delete[]  elements;
-    size = vector.size;
-    start_index = vector.start_index;
-     elements = new ValType [size];
+	if (size != vector.size) {
+		size = vector.size;
+		start_index = vector.start_index;
+		delete  elements;
+		elements = new ValType[size];
+	}
     for (int i = 0; i < size; i++) {
          elements[i] = vector.elements[i];
     }

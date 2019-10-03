@@ -32,6 +32,9 @@ public:
             throw matrixzerosizeerror();
         }
         for (int i = 0; i < matrix.size; i++) {
+			for (int j = 0; j < matrix.elements[i].StartIndex(); j++) {
+				out << "0, ";
+			}
             out << matrix.elements[i]<<"\n";
         
         }
@@ -77,7 +80,7 @@ bool TMatrix<ValType>::operator != (const TMatrix& matrix) const {
     return (!(*this == matrix));
 }
 
-template<typename ValType>//присваивание
+template<typename ValType>//присваивание ТУТ ОШИБКА
 const TMatrix<ValType>& TMatrix<ValType>:: operator = (const TMatrix& matrix) {
     if (this != &matrix){
         if (this->size != matrix.size){
@@ -123,8 +126,10 @@ TMatrix<ValType> TMatrix<ValType>:: operator + (const TMatrix& matrix) {
     TMatrix<ValType> dop(this->size);
     for (int i = 0; i < this->size; i++) {
         dop.elements[i] = this->elements[i] + matrix.elements[i];
-        cout << dop.elements[i] << endl;
     }
+	for (int j = 0; j < matrix.size; j++) {
+		cout << "start: "<<matrix.elements[j].StartIndex()<<endl;
+	}
     return dop;
 }
 
