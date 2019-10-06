@@ -8,11 +8,12 @@
 using namespace std;
 
 void main() {
-    /*-------------------------„ј—“№_—_¬≈ “ќ–јћ»--------------------------*/
+    /*-------------------------векторы--------------------------*/
     TVector<int> a(3);
     TVector<int> b(3);
     TVector<int> c(4);
     TVector<int> d(0);
+    TVector<int> m(4, 3);
     TVector<int> rez;
     float rez_umnosh;
     TMatrix<int> am(3);
@@ -22,6 +23,10 @@ void main() {
     TMatrix<int> em(2);
     int cc = 10;
     setlocale(LC_ALL, "Rus");
+
+    //вывод стартового индекса
+    cout << "старт индекс веткора m:" << endl;
+    cout << m.StartIndex() << endl;
 
     //ввод векторов
     cout << "¬ведите вектор a" << endl;
@@ -86,7 +91,7 @@ void main() {
     catch (vectorincorrectindexerror e) {
         cout << e.what() << endl;
     }
-    /*-------------------------„ј—“№_—_ћј“–»÷јћ»--------------------------*/
+    /*-------------------------матрицы--------------------------*/
     try {
     //ввод матриц
     cout << "¬ведите матрицу am" << endl;
@@ -128,7 +133,7 @@ void main() {
 
     try {
 
-    //операции с константами
+    //операции с константами + конструктор копирования матрицы
     cout << "am + const" << endl;
     cm = am + cc;
     cout << cm;
@@ -138,6 +143,9 @@ void main() {
     cout << "am * const" << endl;
     cm = am * cc;
     cout << cm;
+    TMatrix<int> copycm(cm);//копирование матрицы
+    cout << "копирую в copym матрицу cm. copycm равна:\n" << endl;
+    cout << copycm;
 
     //вывод матрицы размера 0
         cout << "вывод нулевой матрицы dm(0):";

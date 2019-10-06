@@ -8,7 +8,7 @@
 using namespace std;
 
 class vectorsizeerror : public std::exception{
-    const std::string what_Str = "размеры векторов не совпадают\n";
+    const std::string what_Str = "размеры векторов или их стартовые индексы не совпадают\n";
 public:
     const char* what() const{
         return what_Str.c_str();

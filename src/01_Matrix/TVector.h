@@ -38,8 +38,11 @@ public:
         if (vector.size == 0) {
             throw vectorzerosizeerror();
         }
+        for (int i = 0; i < vector.StartIndex(); i++) {
+            out << "   ";
+        }
         for (int i = 0; i < vector.size; i++)
-            out << vector.elements[i] << ", ";
+            out << vector.elements[i] << "  ";
         out << "\n";
         return out;
 
@@ -57,8 +60,8 @@ TVector<ValType>::TVector(int _size, int _start_index) {
     size = _size;
     elements = new ValType[size];
     start_index = _start_index;
-	for (int i = 0; i < size; i++)
-		elements[i] = 0;
+    for (int i = 0; i < size; i++)
+        elements[i] = 0;
 }
 
 template <typename ValType>//конструктор копирования
@@ -73,12 +76,13 @@ TVector<ValType>::TVector(const TVector& vector) {
 template <typename ValType>//деструктор
 TVector<ValType>::~TVector() {
     size = 0;
+    start_index = 0;
     delete[]  elements;
 }
 
 template <typename ValType>//оператор равенства
 bool TVector<ValType>::operator == (const TVector& vector) const {
-    if (size != vector.size)
+    if ((size != vector.size) || (start_index != vector.start_index))
         return false;
     for (int i = 0; i < size; i++) 
         if ( elements[i] != vector.elements[i])
@@ -93,14 +97,14 @@ bool TVector<ValType>::operator != (const TVector& vector) const {
 
 template<typename ValType>//присваивание
 TVector<ValType>& TVector<ValType>:: operator = (const TVector& vector) {
-    if (this == &vector)
+    if (*this == vector)
         return *this;
-	if (size != vector.size) {
-		size = vector.size;
-		start_index = vector.start_index;
-		delete  elements;
-		elements = new ValType[size];
-	}
+    if (size != vector.size) {
+        size = vector.size;
+        delete  elements;
+        elements = new ValType[size];
+    }
+    start_index = vector.start_index;
     for (int i = 0; i < size; i++) {
          elements[i] = vector.elements[i];
     }
@@ -109,7 +113,7 @@ TVector<ValType>& TVector<ValType>:: operator = (const TVector& vector) {
 
 template<typename ValType>//сложение с const
 TVector<ValType> TVector<ValType>:: operator + (ValType c) {
-    TVector<ValType> dop(size);
+    TVector<ValType> dop(size, start_index);
     for (int i = 0; i < size; i++)
             dop.elements[i] =  elements[i] + c;
     return dop;
@@ -117,7 +121,7 @@ TVector<ValType> TVector<ValType>:: operator + (ValType c) {
 
 template<typename ValType>//вычитание с const
 TVector<ValType> TVector<ValType>:: operator - (ValType c) {
-    TVector<ValType> dop(size);
+    TVector<ValType> dop(size, start_index);
     for (int i = 0; i < size; i++)
         dop.elements[i] =  elements[i] - c;
     return dop;
@@ -125,7 +129,7 @@ TVector<ValType> TVector<ValType>:: operator - (ValType c) {
 
 template<typename ValType>//умножение с const
 TVector<ValType> TVector<ValType>:: operator * (ValType c) {
-    TVector<ValType> dop(size);
+    TVector<ValType> dop(size, start_index);
     for (int i = 0; i < size; i++)
         dop.elements[i] =  elements[i] * c;
     return dop;
@@ -133,9 +137,9 @@ TVector<ValType> TVector<ValType>:: operator * (ValType c) {
 
 template<typename ValType>//сложение 
 TVector<ValType> TVector<ValType>:: operator + (const TVector& vector) {
-    if (size != vector.size)
+    if ((size != vector.size) || (start_index != vector.start_index))
         throw vectorsizeerror();
-    TVector<ValType> dop(size);
+    TVector<ValType> dop(size, start_index);
     for (int i = 0; i < size; i++) {
             dop.elements[i] =  elements[i] + vector.elements[i];
         }
@@ -144,9 +148,9 @@ TVector<ValType> TVector<ValType>:: operator + (const TVector& vector) {
 
 template<typename ValType>//вычитание 
 TVector<ValType> TVector<ValType>:: operator - (const TVector& vector) {
-    if (size != vector.size)
+    if ((size != vector.size) || (start_index != vector.start_index))
         throw vectorsizeerror();
-    TVector<ValType> dop(size);
+    TVector<ValType> dop(size, start_index);
     for (int i = 0; i < size; i++)
         dop.elements[i] =  elements[i] - vector.elements[i];
     return dop;
@@ -154,7 +158,7 @@ TVector<ValType> TVector<ValType>:: operator - (const TVector& vector) {
 
 template<typename ValType>//умножение
 ValType TVector<ValType>:: operator * (const TVector& vector) {
-    if (size != vector.size)
+    if ((size != vector.size) || (start_index != vector.start_index))
         throw vectorsizeerror();
     ValType rez = 0;
     for (int i = 0; i < size; i++)
@@ -164,11 +168,8 @@ ValType TVector<ValType>:: operator * (const TVector& vector) {
 
 template<typename ValType>//длина
 ValType TVector<ValType>:: Lenght () const {
-    ValType s = 0;
-    for (int i = 0; i < size; i++)
-        s = s +  elements[i] *  elements[i];
-    s = sqrt(s);
-    return s;
+    TVector vector(*this);
+    return sqrt(vector * vector);
 }
 
 template<typename ValType>//размер
