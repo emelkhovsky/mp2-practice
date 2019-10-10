@@ -21,6 +21,7 @@ void main() {
     TMatrix<int> cm(3);
     TMatrix<int> dm(0);
     TMatrix<int> em(2);
+    TMatrix<int> preobrm(3);
     int cc = 10;
     setlocale(LC_ALL, "Rus");
 
@@ -111,6 +112,20 @@ void main() {
     cout << "am * bm" << endl;
     cm = am * bm;
     cout << cm;
+
+    //конструктор преобразования
+    cout << "конструктор преобразования" << endl;
+    TVector <TVector<int> > vector(3);
+    for (int i = 0; i < 3; i++)
+    {
+        TVector<int> t(3 - i);
+        for (int j = i; j < 3; j++)
+            t[j - i] = i + j + 1;
+        vector[i] = t;
+    }
+    cout << vector << endl;
+    preobrm = vector;
+    cout << preobrm << endl;
 
     //неравенства
     if (am != bm) {
