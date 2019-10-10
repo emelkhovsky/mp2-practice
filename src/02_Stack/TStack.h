@@ -17,6 +17,8 @@ public:
 	ValType Pop();//удаляем и выводим удаленный элемент
 	bool IsEmpty()const;//проверка на пустоту
 	bool IsFull()const;//проверка на полноту
+	int GettingMaxSize() const;//получаем максимальный размер стека
+	int GettingTop() const;//получаем вершину
 };
 
 template<typename ValType>//констркутор с параметром
@@ -73,6 +75,16 @@ bool TStack<ValType>::IsEmpty()const{
 template<typename ValType>//проверка на полноту
 bool TStack<ValType>::IsFull()const {
 	return (max_size == top);
+}
+
+template<typename ValType>//получение максимального размера стека
+int TStack<ValType>::GettingMaxSize()const {
+	return max_size;
+}
+
+template<typename ValType>//получение веершины стека
+int TStack<ValType>::GettingMaxSize()const {
+	return top;
 }
 
 #endif

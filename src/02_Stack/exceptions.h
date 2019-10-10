@@ -31,5 +31,20 @@ public:
 	}
 };
 
+class incorrectsign : public std::exception {
+	const std::string what_Str = "Некорректный знак\n";
+public:
+	const char* what() const {
+		return what_Str.c_str();
+	}
+};
+
+class incorrectstr : public std::exception {
+	const std::string what_Str = "Некорректно введенная строка\n";
+public:
+	const char* what() const {
+		return what_Str.c_str();
+	}
+};
 
 #endif
