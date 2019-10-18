@@ -61,11 +61,10 @@ void TStack<ValType>::Push(ValType el) {
 
 template<typename ValType>//удаление элемента и его вывод
 ValType TStack<ValType>::Pop() {
-	if (IsEmpty) {
+	if (IsEmpty()) {
 		throw Empty();
 	}
-	ValType dop_value = dop_value + elements[top];
-	return dop_value;
+	return elements[--top];
 }
 
 template<typename ValType>//проверка на пустоту

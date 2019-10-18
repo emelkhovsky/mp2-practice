@@ -12,12 +12,12 @@ public:
 	static string PostfixForm(string);//образование постфиксной формы
 	static char* GettingOperandsMas(string);//возвращает массив операндов
 	static int GettingCount(string);//возвращает кол-во операндов
-	static double Calculate(string, double, char, int);//возвращает результат подсчета
+	static double Calculate(string, double*, char*, int);//возвращает результат подсчета
 	static double* Gettingresulting_mass(string);//ввод значений
 };
 
 template<typename ValType>//возвращает кол-во неповтор€ющих операндов
-static int TCalculator<ValType>::GettingCount(string postfix_form) {
+ int TCalculator<ValType>::GettingCount(string postfix_form) {
 	int count = 0;
 	char* operands_mas = new char[postfix_form.length() + 1];
 	for (int i = 0; i < postfix_form.length(); i++) {
@@ -32,14 +32,14 @@ static int TCalculator<ValType>::GettingCount(string postfix_form) {
 
 
 template <typename ValType>//возвращает массив операндов
-static char* TCalculator<ValType>::GettingOperandsMas(string postfix_form) {
+ char* TCalculator<ValType>::GettingOperandsMas(string postfix_form) {
 	int kol = 0;
-	int count = GettingCount_CreateOperandMas(string postfix_form) + 1;
+	int count = GettingCount(postfix_form) + 1;
 	char* operands_mas = new char[count];
 	for (int i = 0; i < postfix_form.length(); i++) {
 		char sign = static_cast<char>(postfix_form[i]);
 		if ((isalpha(sign)) && (strchr(operands_mas, sign) == NULL)) {
-			operand_mas[kol] = sign;
+			operands_mas[kol] = sign;
 			kol++;
 		}	
 	}
@@ -47,7 +47,7 @@ static char* TCalculator<ValType>::GettingOperandsMas(string postfix_form) {
 }
 
 template<typename ValType>//возвращает кол-во неповтор€ющих операндов
-static double* TCalculator<ValType>::Gettingresulting_mass(string operands_mas) {
+ double* TCalculator<ValType>::Gettingresulting_mass(string operands_mas) {
 	double* operands_resulting_mas = new double[operands_mas.length() + 1];
 	for (int i = 0; i < operands_mas.length(); i++) {
 		cout << "¬ведите значение операнда " << operands_mas[i] << ": " << endl;
@@ -57,7 +57,7 @@ static double* TCalculator<ValType>::Gettingresulting_mass(string operands_mas) 
 }
 
 template <typename ValType>//определение приоретета операций
-static int TCalculator<ValType>:: Priority(const char sign) {
+ int TCalculator<ValType>:: Priority(const char sign) {
 	switch (sign) {
 	case '(': return 0;
 	case ')': return 0;
@@ -69,12 +69,12 @@ static int TCalculator<ValType>:: Priority(const char sign) {
 	}
 }
 template <typename ValType>//определение операци€ это или нет
-static bool TCalculator<ValType>::IsItOperation(const char sign) {
+ bool TCalculator<ValType>::IsItOperation(const char sign) {
 	return ((sign == '(') || (sign == ')') || (sign == '*') || (sign == '/') || (sign == '+') || (sign == '-'));
 }
 
 template <typename ValType>//образование постфиксной формы
-static string TCalculator<ValType>::PostfixForm(string exp) {
+ string TCalculator<ValType>::PostfixForm(string exp) {
 	if (exp.length() == 0) {
 		throw incorrectstr();
 	}
@@ -131,16 +131,16 @@ static string TCalculator<ValType>::PostfixForm(string exp) {
 	return postfix_form;
 }
 
-template<typename ValType>//ѕ≈–≈ƒ≈Ћј“№ ¬—≈
-double TCalculator<ValType>::Calculate(string postfix_form, double operands_values, char operands_mas, int count)
+template<typename ValType>//
+double TCalculator<ValType>::Calculate(string postfix_form, double* operands_values, char* operands_mas, int count)
 {
-	double* resulting_mas = new double[postfix_form.length()];
+	TStack<double> resulting_mas(postfix_form.length());
 	for (int i = 0; i < postfix_form.length(); i++){
 		char sign = static_cast<char>(postfix_form[i]);
 		if (!IsItOperation(sign)){
 			for (int j = 0; j < count; j++){
 				if (operands_mas[j] == sign){
-					resulting_mas.Push(static_cast<double>(operands_value[j]);
+					resulting_mas.Push(static_cast<double>(operands_values[j]));
 					break;
 				}
 			}
@@ -149,21 +149,22 @@ double TCalculator<ValType>::Calculate(string postfix_form, double operands_valu
 
 		double first = resulting_mas.Pop();
 		double second = resulting_mas.Pop();
+		double result;
 
 		switch (sign){
 		case '+':
-			double result = second + first;
+			result = second + first;
 			break;
 		case '-':
-			double result = second - first;
+			result = second - first;
 			break;
 		case '*':
-			double result = second * first;
+			result = second * first;
 			break;
 		case '/':
 			if (first == 0)
 				throw zeroerror();
-			double result = second / first;
+			result = second / first;
 			break;
 		}
 
