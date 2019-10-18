@@ -15,7 +15,7 @@ public:
 	}
 };
 
-class empty : public std::exception {
+class Empty : public std::exception {
 	const std::string what_Str = "Стек пуст\n";
 public:
 	const char* what() const {
@@ -41,6 +41,14 @@ public:
 
 class incorrectstr : public std::exception {
 	const std::string what_Str = "Некорректно введенная строка\n";
+public:
+	const char* what() const {
+		return what_Str.c_str();
+	}
+};
+
+class zeroerror : public std::exception {
+	const std::string what_Str = "На 0 делить нельзя:(\n";
 public:
 	const char* what() const {
 		return what_Str.c_str();
