@@ -6,7 +6,7 @@ using namespace std;
 
 template <typename ValType>
 class TCalculator {
-public:
+public: 
     static int Priority(const char);//определение приоретета операций
     static bool IsItOperation(const char);//определение операци¤ это или нет
     static string PostfixForm(string);//образование постфиксной формы
@@ -66,7 +66,7 @@ template <typename ValType>//определение приоретета опе�
     case '-': return 1;
     case '*': return 2;
     case '/': return 2;
-    default: throw Exception("Ќекорректный знак\n");
+    default: throw Exception("Некорректный знак\n");
     }
 }
 template <typename ValType>//определение операци¤ это или нет(done)
@@ -77,36 +77,34 @@ template <typename ValType>//определение операци¤ это ил
 template <typename ValType>//образование постфиксной формы
  string TCalculator<ValType>::PostfixForm(string exp) {
     if (exp.length() == 0) {
-        throw Exception("Ќекорректно введенна¤ строка\n");
+        throw Exception("Некорректно введенная строка\n");
     }
     TStack<char> stack1(exp.length() + 1);
     TStack<char> stack2(exp.length() + 1);
-    int bracket_flag = 0;
+    int left_bracket_flag = 0;
     for (int i = 0; i < exp.length(); i++) {
         char sign = static_cast<char>(exp[i]);
         if (sign != ' ') {
             if (IsItOperation(sign)) {
 
                 if (sign == '(') {
-                    bracket_flag = 1;
+                    left_bracket_flag = 1;
                     stack1.Push(sign);
                     continue;
                 }
 
                 if (sign == ')') {
-                    if (bracket_flag == 0) {
-                        throw Exception(" ажетс¤, вы забыли скобку (\n");
+                    if (left_bracket_flag == 0) {
+                        throw Exception(" Кажется, вы забыли скобку (\n");
                     }
+                    right_bracket_flag = 1;
                     while ((!stack1.IsEmpty())&&(stack1.GettingTopElement() != '(')) {
                         stack2.Push(stack1.GettingTopElement());
                         stack1.Pop();
                     }
                     if (stack1.GettingTopElement() == '(') {
                         stack1.Pop();
-                    }    
-                    else if(stack1.IsEmpty()){
-                        throw Exception(" ажетс¤, вы забыли скобку )\n");
-                    }
+                    }        
                     continue;
                 }
 
@@ -127,7 +125,7 @@ template <typename ValType>//образование постфиксной фо�
                 continue;
             }
             else {
-                throw Exception("Ќекорректный знак\n");
+                throw Exception("Некорректный знак\n");
             }
         }
     }
@@ -178,7 +176,7 @@ double TCalculator<ValType>::Calculate(string postfix_form, double* operands_val
             break;
         case '/':
             if (first == 0)
-                throw Exception("Ќа 0 делить нельз¤:(\n");
+                throw Exception("На 0 делить нельзя:(\n");
             result = second / first;
             break;
         }
