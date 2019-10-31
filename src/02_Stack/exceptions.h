@@ -1,4 +1,4 @@
-#ifndef _EXCEPTIONS_H_
+п»ї#ifndef _EXCEPTIONS_H_
 #define _EXCEPTIONS_H_
 
 #include <iostream>
@@ -7,52 +7,13 @@
 
 using namespace std;
 
-class incorrect_max_size : public std::exception {
-	const std::string what_Str = "Некорректный максимальный размер стека\n";
+class Exception : public exception{
+private:
+    string msg;
 public:
-	const char* what() const {
-		return what_Str.c_str();
-	}
+    Exception(string _msg) : msg(_msg) {};
+    const char* what() const noexcept{
+        return msg.c_str();
+    }
 };
-
-class Empty : public std::exception {
-	const std::string what_Str = "Стек пуст\n";
-public:
-	const char* what() const {
-		return what_Str.c_str();
-	}
-};
-
-class full : public std::exception {
-	const std::string what_Str = "Стек полон\n";
-public:
-	const char* what() const {
-		return what_Str.c_str();
-	}
-};
-
-class incorrectsign : public std::exception {
-	const std::string what_Str = "Некорректный знак\n";
-public:
-	const char* what() const {
-		return what_Str.c_str();
-	}
-};
-
-class incorrectstr : public std::exception {
-	const std::string what_Str = "Некорректно введенная строка\n";
-public:
-	const char* what() const {
-		return what_Str.c_str();
-	}
-};
-
-class zeroerror : public std::exception {
-	const std::string what_Str = "На 0 делить нельзя:(\n";
-public:
-	const char* what() const {
-		return what_Str.c_str();
-	}
-};
-
 #endif

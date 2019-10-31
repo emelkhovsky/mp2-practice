@@ -1,4 +1,4 @@
-#ifndef _TSTACK_H_ 
+п»ї#ifndef _TSTACK_H_ 
 #define _TSTACK_H_
 #include "exceptions.h"
 using namespace std;
@@ -6,90 +6,94 @@ using namespace std;
 template<typename ValType>
 class TStack {
 private:
-	int max_size;
-	ValType* elements;
-	int top;
+    int max_size;
+    ValType* elements;
+    int top;
 public:
-	TStack(int);//конструктор
-	TStack(const TStack&);//конструктор копирования
-	~TStack();//деструктор
-	void Push(ValType);//кладет элемент на вершину стека
-	ValType Pop();//удаляем и выводим удаленный элемент
-	bool IsEmpty()const;//проверка на пустоту
-	bool IsFull()const;//проверка на полноту
-	int GettingMaxSize() const;//получаем максимальный размер стека
-	ValType GettingTopElement() const;//получаем значение вершины
-	int GettingTop() const;//получаем топ
+    TStack(int);//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    TStack(const TStack&);//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+    ~TStack();//РґРµСЃС‚СЂСѓРєС‚РѕСЂ
+
+    void Push(ValType);//РєР»Р°РґРµС‚ СЌР»РµРјРµРЅС‚ РЅР° РІРµСЂС€РёРЅСѓ СЃС‚РµРєР°
+    ValType Pop();//СѓРґР°Р»СЏРµРј СЌР»РµРјРµРЅС‚
+
+    bool IsEmpty()const;//РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
+    bool IsFull()const;//РїСЂРѕРІРµСЂРєР° РЅР° РїРѕР»РЅРѕС‚Сѓ
+
+    int GettingMaxSize() const;//РїРѕР»СѓС‡Р°РµРј РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ СЃС‚РµРєР°
+    ValType GettingTopElement() const;//РїРѕР»СѓС‡Р°РµРј Р·РЅР°С‡РµРЅРёРµ РІРµСЂС€РёРЅС‹
+    int GettingTop() const;//РїРѕР»СѓС‡Р°РµРј С‚РѕРї
 };
 
-template<typename ValType>//констркутор с параметром
+template<typename ValType>//РєРѕРЅСЃС‚СЂРєСѓС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂРѕРј
 TStack<ValType>::TStack(int _max_size) {
-	if (_max_size <= 0) {
-		throw incorrect_max_size();
-	}
-	max_size = _max_size;
-	elements = new ValType[max_size];
-	top = 0;
-	for (int i = 0; i < max_size; i++) {
-		elements[i] = 0;
-	}
+    if (_max_size <= 0) {
+        throw Exception("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ СЃС‚РµРєР°\n");
+    }
+    max_size = _max_size;
+    elements = new ValType[max_size];
+    top = 0;
+    for (int i = 0; i < max_size; i++) {
+        elements[i] = 0;
+    }
 }
 
-template<typename ValType>//конструктор копирования
+template<typename ValType>//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 TStack<ValType>::TStack(const TStack& stack) {
-	max_size = stack.max_size;
-	top = stack.top;
-	for (int i; i < max_size; i++) {
-		elements[i] = stack.elements[i];
-	}
+    max_size = stack.max_size;
+    top = stack.top;
+    for (int i; i < max_size; i++) {
+        elements[i] = stack.elements[i];
+    }
 }
 
-template<typename ValType>//деструктор
+template<typename ValType>//РґРµСЃС‚СЂСѓРєС‚РѕСЂ(done)
 TStack<ValType>::~TStack() {
-	top = 0;
-	max_size = 0;
-	delete [] elements;
+    top = 0;
+    max_size = 0;
+    delete [] elements;
 }
 
-template<typename ValType>//добавление элемента на вершину стека
+template<typename ValType>//РґРѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РЅР° РІРµСЂС€РёРЅСѓ СЃС‚РµРєР°
 void TStack<ValType>::Push(ValType el) {
-	if (IsFull()) {
-		throw full();
-	}
-	elements[top] = el;
+    if (IsFull()) {
+        throw Exception("РЎС‚РµРє РїРѕР»РѕРЅ\n");
+    }
+    elements[top] = el;
+    top++;
 }
 
-template<typename ValType>//удаление элемента и его вывод
+template<typename ValType>//СѓРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° 
 ValType TStack<ValType>::Pop() {
-	if (IsEmpty()) {
-		throw Empty();
-	}
-	return elements[--top];
+    if (IsEmpty()) {
+        throw Exception("РЎС‚РµРє РїСѓСЃС‚\n");
+    }
+    top--;
 }
 
-template<typename ValType>//проверка на пустоту
+template<typename ValType>//РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
 bool TStack<ValType>::IsEmpty()const{
-	return (top == 0);
+    return (top == 0);
 }
 
-template<typename ValType>//проверка на полноту
+template<typename ValType>//РїСЂРѕРІРµСЂРєР° РЅР° РїРѕР»РЅРѕС‚Сѓ
 bool TStack<ValType>::IsFull()const {
-	return (max_size == top);
+    return (max_size == top);
 }
 
-template<typename ValType>//получение максимального размера стека
+template<typename ValType>//РїРѕР»СѓС‡РµРЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ СЂР°Р·РјРµСЂР° СЃС‚РµРєР°
 int TStack<ValType>::GettingMaxSize()const {
-	return max_size;
+    return max_size;
 }
 
-template<typename ValType>//получение значение вершины
+template<typename ValType>//РїРѕР»СѓС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёРµ РІРµСЂС€РёРЅС‹
 ValType TStack<ValType>::GettingTopElement()const {
-	return elements[top - 1];
+    return elements[top - 1];
 }
 
-template<typename ValType>//получение топа
+template<typename ValType>//РїРѕР»СѓС‡РµРЅРёРµ С‚РѕРїР°
 int TStack<ValType>::GettingTop()const {
-	return top;
+    return top;
 }
 
 #endif

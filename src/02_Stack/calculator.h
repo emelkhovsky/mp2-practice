@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <string>
 #include "tstack.h"
 #include "exceptions.h"
@@ -7,169 +7,185 @@ using namespace std;
 template <typename ValType>
 class TCalculator {
 public:
-	static int Priority(const char);//определение приоретета операций
-	static bool IsItOperation(const char);//определение операция это или нет
-	static string PostfixForm(string);//образование постфиксной формы
-	static char* GettingOperandsMas(string);//возвращает массив операндов
-	static int GettingCount(string);//возвращает кол-во операндов
-	static double Calculate(string, double*, char*, int);//возвращает результат подсчета
-	static double* Gettingresulting_mass(string);//ввод значений
+    static int Priority(const char);//РѕРїСЂРµРґРµР»РµРЅРёРµ РїСЂРёРѕСЂРµС‚РµС‚Р° РѕРїРµСЂР°С†РёР№
+    static bool IsItOperation(const char);//РѕРїСЂРµРґРµР»РµРЅРёРµ РѕРїРµСЂР°С†РёВ¤ СЌС‚Рѕ РёР»Рё РЅРµС‚
+    static string PostfixForm(string);//РѕР±СЂР°Р·РѕРІР°РЅРёРµ РїРѕСЃС‚С„РёРєСЃРЅРѕР№ С„РѕСЂРјС‹
+    static char* GettingOperandsMas(string);//РІРѕР·РІСЂР°С‰Р°РµС‚ РјР°СЃСЃРёРІ РѕРїРµСЂР°РЅРґРѕРІ
+    static int GettingCount(string);//РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»-РІРѕ РѕРїРµСЂР°РЅРґРѕРІ
+    static double Calculate(string, double*, char*, int);//РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РїРѕРґСЃС‡РµС‚Р°
+    static double* Gettingresulting_mass(string, int);//РІРІРѕРґ Р·РЅР°С‡РµРЅРёР№
 };
 
-template<typename ValType>//возвращает кол-во неповторяющих операндов
+template<typename ValType>//РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»-РІРѕ РЅРµРїРѕРІС‚РѕСЂВ¤СЋС‰РёС… РѕРїРµСЂР°РЅРґРѕРІ
  int TCalculator<ValType>::GettingCount(string postfix_form) {
-	int count = 0;
-	char* operands_mas = new char[postfix_form.length() + 1];
-	for (int i = 0; i < postfix_form.length(); i++) {
-		char sign = static_cast<char>(postfix_form[i]);
-		if ((isalpha(sign))&&(strchr(operands_mas, sign) == NULL)) {
-			operands_mas[count] = sign;
-			count++;
-		}
-	}
-	return count;
+    int count = 0;
+    char* operands_mas = new char[postfix_form.length() + 1];
+    for (int i = 0; i < postfix_form.length(); i++) {
+        char sign = static_cast<char>(postfix_form[i]);
+        if ((isalpha(sign))&&(strchr(operands_mas, sign) == NULL)) {
+            operands_mas[count] = sign;
+            count++;
+        }
+    }
+    return count;
 }
 
 
-template <typename ValType>//возвращает массив операндов
+template <typename ValType>//РІРѕР·РІСЂР°С‰Р°РµС‚ РјР°СЃСЃРёРІ РѕРїРµСЂР°РЅРґРѕРІ
  char* TCalculator<ValType>::GettingOperandsMas(string postfix_form) {
-	int kol = 0;
-	int count = GettingCount(postfix_form) + 1;
-	char* operands_mas = new char[count];
-	for (int i = 0; i < postfix_form.length(); i++) {
-		char sign = static_cast<char>(postfix_form[i]);
-		if ((isalpha(sign)) && (strchr(operands_mas, sign) == NULL)) {
-			operands_mas[kol] = sign;
-			kol++;
-		}	
-	}
-	return operands_mas;
+    int kol = 0;
+    int count = GettingCount(postfix_form) + 1;
+    char* operands_mas = new char[count];
+    for (int i = 0; i < postfix_form.length(); i++) {
+        char sign = static_cast<char>(postfix_form[i]);
+        cout << sign << endl;
+        if ((isalpha(sign)) && (strchr(operands_mas, sign) == NULL)) {
+            operands_mas[kol] = sign;
+            kol++;
+        }    
+    }
+    return operands_mas;
 }
 
-template<typename ValType>//возвращает кол-во неповторяющих операндов
- double* TCalculator<ValType>::Gettingresulting_mass(string operands_mas) {
-	double* operands_resulting_mas = new double[operands_mas.length() + 1];
-	for (int i = 0; i < operands_mas.length(); i++) {
-		cout << "Введите значение операнда " << operands_mas[i] << ": " << endl;
-		cin >> operands_resulting_mas[i];
-	}
-	return operands_resulting_mas;
+template<typename ValType>//РІРІРѕРґ Р·РЅР°С‡РµРЅРёР№
+ double* TCalculator<ValType>::Gettingresulting_mass(string operands_mas, int count) {
+    double* operands_resulting_mas = new double[count];
+    for (int i = 0; i < count; i++) {
+        cout << "РІРІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РѕРїРµСЂР°РЅРґР° " << operands_mas[i] << ": " << endl;                
+        cin >> operands_resulting_mas[i];
+    }
+    return operands_resulting_mas;
 }
 
-template <typename ValType>//определение приоретета операций
+template <typename ValType>//РѕРїСЂРµРґРµР»РµРЅРёРµ РїСЂРёРѕСЂРµС‚РµС‚Р° РѕРїРµСЂР°С†РёР№(done)
  int TCalculator<ValType>:: Priority(const char sign) {
-	switch (sign) {
-	case '(': return 0;
-	case ')': return 0;
-	case '*': return 1;
-	case '/': return 1;
-	case '+': return 2;
-	case '-': return 2;
-	default: throw incorrectsign();
-	}
+    switch (sign) {
+    case '(': return 0;
+    case ')': return 0;
+    case '+': return 1;
+    case '-': return 1;
+    case '*': return 2;
+    case '/': return 2;
+    default: throw Exception("РЊРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ Р·РЅР°Рє\n");
+    }
 }
-template <typename ValType>//определение операция это или нет
+template <typename ValType>//РѕРїСЂРµРґРµР»РµРЅРёРµ РѕРїРµСЂР°С†РёВ¤ СЌС‚Рѕ РёР»Рё РЅРµС‚(done)
  bool TCalculator<ValType>::IsItOperation(const char sign) {
-	return ((sign == '(') || (sign == ')') || (sign == '*') || (sign == '/') || (sign == '+') || (sign == '-'));
+    return ((sign == '(') || (sign == ')') || (sign == '*') || (sign == '/') || (sign == '+') || (sign == '-'));
 }
 
-template <typename ValType>//образование постфиксной формы
+template <typename ValType>//РѕР±СЂР°Р·РѕРІР°РЅРёРµ РїРѕСЃС‚С„РёРєСЃРЅРѕР№ С„РѕСЂРјС‹
  string TCalculator<ValType>::PostfixForm(string exp) {
-	if (exp.length() == 0) {
-		throw incorrectstr();
-	}
-	TStack<char> stack1(exp.length() + 1);//для операций
-	TStack<char> stack2(exp.length() + 1);//для операндов
-	for (int i = 0; i < exp.length(); i++) {
-		char sign = static_cast<char>(exp[i]);//приведение к чару
-		if (sign != ' ') {//пропуск пробела
-			if (IsItOperation(sign)) {//если операция
+    if (exp.length() == 0) {
+        throw Exception("РЊРµРєРѕСЂСЂРµРєС‚РЅРѕ РІРІРµРґРµРЅРЅР°В¤ СЃС‚СЂРѕРєР°\n");
+    }
+    TStack<char> stack1(exp.length() + 1);
+    TStack<char> stack2(exp.length() + 1);
+    int bracket_flag = 0;
+    for (int i = 0; i < exp.length(); i++) {
+        char sign = static_cast<char>(exp[i]);
+        if (sign != ' ') {
+            if (IsItOperation(sign)) {
 
-				if (sign == '(') {
-					stack1.Push(sign);
-					continue;
-				}
+                if (sign == '(') {
+                    bracket_flag = 1;
+                    stack1.Push(sign);
+                    continue;
+                }
 
-				if (sign == ')') {
-					while (stack1.GettingTopElement() != ')') {
-						stack2.Push(stack1.Pop());
-					}
-					stack1.Pop();
-					continue;
-				}
+                if (sign == ')') {
+                    if (bracket_flag == 0) {
+                        throw Exception("В Р°Р¶РµС‚СЃВ¤, РІС‹ Р·Р°Р±С‹Р»Рё СЃРєРѕР±РєСѓ (\n");
+                    }
+                    while ((!stack1.IsEmpty())&&(stack1.GettingTopElement() != '(')) {
+                        stack2.Push(stack1.GettingTopElement());
+                        stack1.Pop();
+                    }
+                    if (stack1.GettingTopElement() == '(') {
+                        stack1.Pop();
+                    }    
+                    else if(stack1.IsEmpty()){
+                        throw Exception("В Р°Р¶РµС‚СЃВ¤, РІС‹ Р·Р°Р±С‹Р»Рё СЃРєРѕР±РєСѓ )\n");
+                    }
+                    continue;
+                }
 
-				if ((stack1.IsEmpty()) || (Priority(sign) >= Priority(stack1.GettingTopElement()))){
-					stack1.Push(sign);
-					continue;
-				}
+                if ((stack1.IsEmpty()) || (Priority(sign) >= Priority(stack1.GettingTopElement()))){
+                    stack1.Push(sign);
+                    continue;
+                }
+                cout << sign << endl;
+                while ((!stack1.IsEmpty()) && (Priority(sign) <= Priority(stack1.GettingTopElement()))) {
+                    stack2.Push(stack1.GettingTopElement());
+                    stack1.Pop();
+                }
+                stack1.Push(sign);
+                continue;
+            }
+            else  if (isalpha(sign)){
+                stack2.Push(sign);
+                continue;
+            }
+            else {
+                throw Exception("РЊРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ Р·РЅР°Рє\n");
+            }
+        }
+    }
+    while (!stack1.IsEmpty()){
+        stack2.Push(stack1.GettingTopElement());
+        stack1.Pop();
+    }
+    string postfix_form(stack2.GettingMaxSize(), 0);
 
-				while ((!stack1.IsEmpty()) && (Priority(sign) <= Priority(stack1.GettingTopElement()))) {//ВРОДЕ БЫ СТРОГО <?
-					stack2.Push(stack1.Pop());
-				}
-				stack1.Push(sign);
-				continue;
-			}
-			else  if (isalpha(sign)){//если операнд
-				stack2.Push(sign);
-				continue;
-			}
-			else {
-				throw incorrectsign();
-			}
-		}
-	}
-	while (!stack1.IsEmpty()){//перекидываем все во 2ой
-		char pop_element = stack1.Pop();
-		stack2.Push(pop_element);
-	}
-	string postfix_form(stack2.GettingMaxSize(), 0);//в эту строчку закидываем все
-
-	while (!stack2.IsEmpty()){
-		postfix_form[stack2.GettingTop() - 1] = stack2.GettingTopElement();
-		stack2.Pop();
-	}
-	return postfix_form;
+    while (!stack2.IsEmpty()){
+        postfix_form[stack2.GettingTop() - 1] = stack2.GettingTopElement();
+        stack2.Pop();
+    }
+    return postfix_form;
 }
 
-template<typename ValType>//
+template<typename ValType>//РїРѕРґСЃС‡РµС‚
 double TCalculator<ValType>::Calculate(string postfix_form, double* operands_values, char* operands_mas, int count)
-{
-	TStack<double> resulting_mas(postfix_form.length());
-	for (int i = 0; i < postfix_form.length(); i++){
-		char sign = static_cast<char>(postfix_form[i]);
-		if (!IsItOperation(sign)){
-			for (int j = 0; j < count; j++){
-				if (operands_mas[j] == sign){
-					resulting_mas.Push(static_cast<double>(operands_values[j]));
-					break;
-				}
-			}
-			continue;
-		}
+{    
+    TStack<double> resulting_mas(postfix_form.length());
+    for (int i = 0; i < postfix_form.length(); i++){
+        char sign = static_cast<char>(postfix_form[i]);
+        if (!IsItOperation(sign)){
+            for (int j = 0; j < count; j++){
+                if (operands_mas[j] == sign){
+                    resulting_mas.Push(static_cast<double>(operands_values[j]));
+                    break;
+                }
+            }
+            continue;
+        }
 
-		double first = resulting_mas.Pop();
-		double second = resulting_mas.Pop();
-		double result;
+        double first = resulting_mas.GettingTopElement();
+        resulting_mas.Pop();
+        double second = resulting_mas.GettingTopElement();
+        resulting_mas.Pop();
+        double result;
 
-		switch (sign){
-		case '+':
-			result = second + first;
-			break;
-		case '-':
-			result = second - first;
-			break;
-		case '*':
-			result = second * first;
-			break;
-		case '/':
-			if (first == 0)
-				throw zeroerror();
-			result = second / first;
-			break;
-		}
+        switch (sign){
+        case '+':
+            result = second + first;
+            break;
+        case '-':
+            result = second - first;
+            break;
+        case '*':
+            result = second * first;
+            break;
+        case '/':
+            if (first == 0)
+                throw Exception("РЊР° 0 РґРµР»РёС‚СЊ РЅРµР»СЊР·В¤:(\n");
+            result = second / first;
+            break;
+        }
 
-		resulting_mas.Push(result);
-	}
-	return resulting_mas.Pop();
+        resulting_mas.Push(result);
+    }
+    return resulting_mas.GettingTopElement();
 };
+
 
