@@ -7,21 +7,22 @@ using namespace std;
 
 void main() {
     string expression;
+	string operands;
     setlocale(LC_ALL, "Rus");
     try {
         cout << "Введите выражение" << endl;
         getline(cin, expression);
-        string p_f = TCalculator<double>::PostfixForm(expression);
+        string p_f = TCalculator::PostfixForm(expression);
         cout << "Постфиксная форма равна:" << endl;
         cout << p_f << endl;
-        int count = TCalculator<double>::GettingCount(p_f);
-        cout << "Количество неповторяющихся операндов:" << count << endl;
-        char* operands_mas = TCalculator<double>::GettingOperandsMas(p_f);//массив с операндами
-        double* operands_values = TCalculator<double>::Gettingresulting_mass(operands_mas, count);//массив со значениями
-        double result = TCalculator<double>::Calculate(p_f, operands_values, operands_mas, count);//результат
-        cout << "Ваш результат: " << result << endl;
+        int count = TCalculator::GettingCount(p_f);
+        cout << "Количество неповторяющихся операндов:" << count << endl;//(вот до этого момента все супер)
+		double* values = new double[count];
+		TCalculator::GettingValues(values, operands, p_f, count);
+		double result = TCalculator::Calculate(values, operands, p_f);
+		cout << "Ваш результат: " << result << endl;
     }
-    catch (Exception ex){
+    catch (const Exception& ex){
         cout << ex.what() << endl << endl;
     }
     system("pause");

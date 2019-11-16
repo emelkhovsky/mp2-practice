@@ -15,14 +15,12 @@ public:
     ~TStack();//деструктор
 
     void Push(ValType);//кладет элемент на вершину стека
-    ValType Pop();//удаляем элемент
+    ValType Pop_Get();//удаляем элемент и возвращаем его
 
     bool IsEmpty()const;//проверка на пустоту
     bool IsFull()const;//проверка на полноту
 
-    int GettingMaxSize() const;//получаем максимальный размер стека
-    ValType GettingTopElement() const;//получаем значение вершины
-    int GettingTop() const;//получаем топ
+    void Pop();//уменьшаем стек
 };
 
 template<typename ValType>//констркутор с параметром
@@ -63,12 +61,12 @@ void TStack<ValType>::Push(ValType el) {
     top++;
 }
 
-template<typename ValType>//удаление элемента 
-ValType TStack<ValType>::Pop() {
+template<typename ValType>//удаление элемента и получение топа
+ValType TStack<ValType>::Pop_Get() {
     if (IsEmpty()) {
         throw Exception("Стек пуст\n");
     }
-    top--;
+	return elements[top-1];
 }
 
 template<typename ValType>//проверка на пустоту
@@ -81,19 +79,12 @@ bool TStack<ValType>::IsFull()const {
     return (max_size == top);
 }
 
-template<typename ValType>//получение максимального размера стека
-int TStack<ValType>::GettingMaxSize()const {
-    return max_size;
-}
-
-template<typename ValType>//получение значение вершины
-ValType TStack<ValType>::GettingTopElement()const {
-    return elements[top - 1];
-}
-
-template<typename ValType>//получение топа
-int TStack<ValType>::GettingTop()const {
-    return top;
+template<typename ValType>//уменьшение стека
+void TStack<ValType>::Pop() {
+	if (IsEmpty()) {
+		throw Exception("Стек пуст\n");
+	}
+	top--;
 }
 
 #endif
