@@ -7,7 +7,7 @@ using namespace std;
 
 void main() {
     string expression;
-	string operands;
+    string operands;
     setlocale(LC_ALL, "Rus");
     try {
         cout << "Введите выражение" << endl;
@@ -17,10 +17,10 @@ void main() {
         cout << p_f << endl;
         int count = TCalculator::GettingCount(p_f);
         cout << "Количество неповторяющихся операндов:" << count << endl;//(вот до этого момента все супер)
-		double* values = new double[count];
-		TCalculator::GettingValues(values, operands, p_f, count);
-		double result = TCalculator::Calculate(values, operands, p_f);
-		cout << "Ваш результат: " << result << endl;
+        double* values = new double[count];
+        TCalculator::GettingValues(values, operands, p_f, count);
+        double result = TCalculator::Calculate(values, operands, p_f);
+        cout << "Ваш результат: " << result << endl;
     }
     catch (const Exception& ex){
         cout << ex.what() << endl << endl;

@@ -66,7 +66,7 @@ ValType TStack<ValType>::Pop_Get() {
     if (IsEmpty()) {
         throw Exception("Стек пуст\n");
     }
-	return elements[top-1];
+    return elements[top-1];
 }
 
 template<typename ValType>//проверка на пустоту
@@ -81,10 +81,10 @@ bool TStack<ValType>::IsFull()const {
 
 template<typename ValType>//уменьшение стека
 void TStack<ValType>::Pop() {
-	if (IsEmpty()) {
-		throw Exception("Стек пуст\n");
-	}
-	top--;
+    if (IsEmpty()) {
+        throw Exception("Стек пуст\n");
+    }
+    top--;
 }
 
 #endif
