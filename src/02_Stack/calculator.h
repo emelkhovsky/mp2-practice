@@ -11,9 +11,8 @@ private:
 	static bool IsItOperation(const char);//определение операция это или нет
 public: 
     static string PostfixForm(string);//образование постфиксной формы
-    static int GettingCount(string);//возвращает кол-во операндов
-    static double Calculate(double*, string&, string);//возвращает результат подсчета
-    static void GettingValues(double*, string&, string, int);//ввод значений
+	static double Calculate(double*, char*, string, int);//возвращает результат подсчета
+	static void GettingOperands(string, char*&, double*&, int&);
 };
 
 //определение приоретета операций
@@ -34,24 +33,20 @@ public:
  bool TCalculator::IsItOperation(const char sign) {
     return ((sign == '*') || (sign == '/') || (sign == '+') || (sign == '-'));
 }
-//возвращает кол-во неповторяющих операндов
- int TCalculator::GettingCount(string postfix_form) {
-    int count = 0;
-    for (int i = 0; i < postfix_form.length(); i++) {
-        if (isalpha(postfix_form[i])) {
-            count++;
-        }
-    }
-    return count;
-}
-//ввод значений
- void TCalculator::GettingValues(double* values, string& operands, string p_f, int count) {
+
+ void TCalculator::GettingOperands(string p_f, char*& operands, double*& values, int& count) {
+	 for (int i = 0; i < p_f.length(); i++) {
+		 if (isalpha(p_f[i])) {
+			 count++;
+		 }
+	 }
 	 int current_count_of_operands = 0;
 	 double value = 0;
 	 char* new_operands = new char[count];
 	 double* new_values = new double[count];
 	 for (int i = 0; i < p_f.length(); i++) {
 		 if (isalpha(p_f[i])) {
+			 count++;
 			 int flag = 0;
 			 for (int j = 0; j < current_count_of_operands; j++) {
 				 if (new_operands[j] == p_f[i]) {
@@ -68,9 +63,10 @@ public:
 			 }
 		 }
 	 }
-	 operands.assign(new_operands);//скопировали 2ое в 1ое, преобразовали к string
 	 memcpy(values, new_values, sizeof(double) * count);//скопировали 2ое в 1ое
-}
+	 memcpy(operands, new_operands, sizeof(char) * count);//скопировали 2ое в 1ое
+ }
+
 
 //образование постфиксной формы
  string TCalculator::PostfixForm(string exp) {
@@ -143,13 +139,13 @@ public:
 }
 
 //подсчет
-double TCalculator::Calculate(double* values, string& operands, string p_f)
+double TCalculator::Calculate(double* values, char* operands, string p_f, int count)
 {    
     TStack<double> resulting_mas(p_f.length());
     for (int i = 0; i < p_f.length(); i++){
         char sign = static_cast<char>(p_f[i]);
         if (isalpha(sign)){
-            for (int j = 0; j < operands.length(); j++){
+            for (int j = 0; j < count; j++){
                 if (operands[j] == sign){
                     resulting_mas.Push(values[j]);
                     break;

@@ -15,12 +15,13 @@ void main() {
         string p_f = TCalculator::PostfixForm(expression);
         cout << "Постфиксная форма равна:" << endl;
         cout << p_f << endl;
-        int count = TCalculator::GettingCount(p_f);
-        cout << "Количество неповторяющихся операндов:" << count << endl;//(вот до этого момента все супер)
-        double* values = new double[count];
-        TCalculator::GettingValues(values, operands, p_f, count);
-        double result = TCalculator::Calculate(values, operands, p_f);
-        cout << "Ваш результат: " << result << endl;
+		int count = 0;
+		char* operands = new char[p_f.length()];
+		double* values = new double[p_f.length()];
+		TCalculator::GettingOperands(p_f, operands, values, count);
+		cout << "Количество неповторяющихся операндов:" << count << endl;//(вот до этого момента все супер)
+		double result = TCalculator::Calculate(values, operands, p_f, count);
+		cout << "Ваш результат: " << result << endl;
     }
     catch (const Exception& ex){
         cout << ex.what() << endl << endl;
