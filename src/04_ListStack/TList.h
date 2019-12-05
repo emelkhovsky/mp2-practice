@@ -16,18 +16,16 @@ public:
 	TList(const TList&);
 	TList(const TNode<TKey, TData>*);
 	~TList();
-
 	void Reset();
 	void Next();
 	bool End() const;
-	TNode<TKey, TData>* Getp_First() const;
+	TNode<TKey, TData>* GetpFirst() const;
 	TNode<TKey, TData>* Search(TKey);
 	void PushBegin(TKey, TData*);
 	void PushEnd(TKey, TData*);
 	void PushBefore(TKey, TKey, TData*);
 	void PushAfter(TKey, TKey, TData*);
 	void Delete(TKey);
-
 	template<class TKey, class TData> friend ostream& operator<<(ostream&, TList<TKey, TData>&);
 };
 
