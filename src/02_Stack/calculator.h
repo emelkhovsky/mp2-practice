@@ -35,11 +35,6 @@ public:
 }
 
  void TCalculator::GettingOperands(string p_f, char*& operands, double*& values, int& count) {
-	 for (int i = 0; i < p_f.length(); i++) {
-		 if (isalpha(p_f[i])) {
-			 count++;
-		 }
-	 }
 	 int current_count_of_operands = 0;
 	 double value = 0;
 	 char* new_operands = new char[count];
@@ -63,6 +58,7 @@ public:
 			 }
 		 }
 	 }
+	 count = current_count_of_operands;
 	 memcpy(values, new_values, sizeof(double) * count);//скопировали 2ое в 1ое
 	 memcpy(operands, new_operands, sizeof(char) * count);//скопировали 2ое в 1ое
  }
