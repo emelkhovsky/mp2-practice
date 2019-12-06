@@ -4,7 +4,7 @@
 #include "TStack.h"
 #include "exceptions.h"
 using namespace std;
-
+ 
 void main() {
     string expression;
     string operands;
