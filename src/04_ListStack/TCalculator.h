@@ -13,14 +13,14 @@ private:
 	TStack<char>* Operands;
 	TStack<char>* Operations;
 	TStack<ValType>* Values;
-	static int Priority(const char);//определение приоретета операций+
-	static bool Comparison(char, TStack<char>&);//сравнение приоритетов+
-	static bool IsItOperation(const char);//определение операция это или нет+
+	int Priority(const char);//определение приоретета операций+
+	bool Comparison(char, TStack<char>&);//сравнение приоритетов+
+	bool IsItOperation(const char);//определение операция это или нет+
 public:
 	TCalculator(TypeStack);
-	static string PostfixForm(string);//образование постфиксной формы
-	static double Calculate(double*, char*, string, int);//возвращает результат подсчета
-	static void GettingOperands(string, char*&, double*&, int&);
+	string PostfixForm(string);//образование постфиксной формы
+	double Calculate(double*, char*, string, int);//возвращает результат подсчета
+	void GettingOperands(string, char*&, double*&, int&);
 };
 
 template<class ValType>//конструктор
@@ -56,11 +56,10 @@ template<class ValType>
 void TCalculator<ValType>::GettingOperands(string p_f, char*& operands, double*& values, int& count) {
 	int current_count_of_operands = 0;
 	double value = 0;
-	char* new_operands = new char[count];
-	double* new_values = new double[count];
+	char* new_operands = new char[p_f.length()];
+	double* new_values = new double[p_f.length()];
 	for (int i = 0; i < p_f.length(); i++) {
 		if (isalpha(p_f[i])) {
-			count++;
 			int flag = 0;
 			for (int j = 0; j < current_count_of_operands; j++) {
 				if (new_operands[j] == p_f[i]) {
@@ -95,7 +94,7 @@ string TCalculator<ValType>::PostfixForm(string exp) {
 			continue;
 		}
 		if (IsItOperation(sign)) {
-			if (Operations->IsEmpty()) {//если в стеке опраций еще ничего нет 
+			if (this->Operations->IsEmpty()) {//если в стеке опраций еще ничего нет 
 				Operations->Push(sign);
 				continue;
 			}

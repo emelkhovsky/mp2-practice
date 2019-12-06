@@ -15,10 +15,10 @@ public:
 	~TArrayStack();//деструктор
 
 	void Push(ValType);//кладет элемент на вершину стека
-	ValType Pop_Get()const;//удаляем элемент и возвращаем его
+	ValType Pop_Get() const;//удаляем элемент и возвращаем его
 
-	bool IsEmpty()const;//проверка на пустоту
-	bool IsFull()const;//проверка на полноту
+	bool IsEmpty() const;//проверка на пустоту
+	bool IsFull() const;//проверка на полноту
 
 	void Pop();//уменьшаем стек
 };
@@ -28,7 +28,6 @@ TArrayStack<ValType>::TArrayStack(int _max_size):max_size(_max_size) {
 	if (_max_size <= 0) {
 		throw Exception("Некорректный максимальный размер стека\n");
 	}
-	max_size = _max_size;
 	elements = new ValType[max_size];
 	top = 0;
 	for (int i = 0; i < max_size; i++) {
@@ -70,7 +69,7 @@ ValType TArrayStack<ValType>::Pop_Get()const {
 }
 
 template<typename ValType>//проверка на пустоту
-bool TArrayStack<ValType>::IsEmpty()const {
+bool TArrayStack<ValType>::IsEmpty() const {
 	return (top == 0);
 }
 

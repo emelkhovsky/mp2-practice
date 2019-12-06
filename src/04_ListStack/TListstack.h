@@ -53,7 +53,7 @@ template<typename ValType>
 void TListStack<ValType>::Push(ValType els){
 	if (IsFull())
 		throw Exception("Стек полон:(");
-	elements->PopBegin(els, NULL);
+	elements->PushBegin(els, NULL);
 	elements->Reset();
 };
 

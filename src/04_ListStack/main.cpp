@@ -9,13 +9,13 @@ void main() {
 	string expression;
 	string operands;
 	setlocale(LC_ALL, "Rus");
+	cout << "Введите выражение" << endl;
+	getline(cin, expression);
 	try {
 		cout << "Введите 1, если хотите выбрать способ со списками, введите 0, если хотите выбрать способ с массивами" << endl;
 		int choice;
 		cin >> choice;
 		if (choice == 0) {
-			cout << "Введите выражение" << endl;
-			getline(cin, expression);
 			TCalculator<double> postfix(AStack);	
 			string p_f = postfix.PostfixForm(expression);
 			cout << "Постфиксная форма равна:" << endl;
@@ -23,14 +23,12 @@ void main() {
 			int count = 0;
 			char* operands = new char[p_f.length()];
 			double* values = new double[p_f.length()];
-			TCalculator<double>::GettingOperands(p_f, operands, values, count);
+			postfix.GettingOperands(p_f, operands, values, count);
 			cout << "Количество неповторяющихся операндов:" << count << endl;//(вот до этого момента все супер)
-			double result = TCalculator<double>::Calculate(values, operands, p_f, count);
+			double result =postfix.Calculate(values, operands, p_f, count);
 			cout << "Ваш результат: " << result << endl;
 		}
 		else {
-			cout << "Введите выражение" << endl;
-			getline(cin, expression);
 			TCalculator<double> postfix(LStack);
 			string p_f = postfix.PostfixForm(expression);
 			cout << "Постфиксная форма равна:" << endl;
@@ -38,9 +36,9 @@ void main() {
 			int count = 0;
 			char* operands = new char[p_f.length()];
 			double* values = new double[p_f.length()];
-			TCalculator<double>::GettingOperands(p_f, operands, values, count);
+			postfix.GettingOperands(p_f, operands, values, count);
 			cout << "Количество неповторяющихся операндов:" << count << endl;//(вот до этого момента все супер)
-			double result = TCalculator<double>::Calculate(values, operands, p_f, count);
+			double result = postfix.Calculate(values, operands, p_f, count);
 			cout << "Ваш результат: " << result << endl;
 		}
 

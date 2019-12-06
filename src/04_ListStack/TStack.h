@@ -13,11 +13,11 @@ template <typename ValType>
 class TStack {
 public:
 	static TStack* Create(TypeStack);
-	virtual bool IsFull()const = 0;
-	virtual bool IsEmpty()const = 0;
+	virtual bool IsFull() const = 0;
+	virtual bool IsEmpty() const = 0;
 	virtual void Push(ValType) = 0;
 	virtual void Pop() = 0;
-	virtual ValType Pop_Get()const = 0;
+	virtual ValType Pop_Get() const = 0;
 };
 
 template<typename ValType>
