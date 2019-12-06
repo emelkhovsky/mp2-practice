@@ -138,7 +138,7 @@ bool TList<TKey, TData>::End() const{
 };
 
 template<class TKey, class TData>
-TNode<TKey, TData>* TList<TKey, TData>::Getp_First() const{
+TNode<TKey, TData>* TList<TKey, TData>::GetpFirst() const{
 	return pFirst;
 };
 
