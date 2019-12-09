@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <string>
 #include "TListstack.h"
 #include "TArrayStack.h"
@@ -13,23 +13,23 @@ private:
 	TStack<char>* Operands;
 	TStack<char>* Operations;
 	TStack<ValType>* Values;
-	int Priority(const char);//определение приоретета операций+
-	bool Comparison(char, TStack<char>&);//сравнение приоритетов+
-	bool IsItOperation(const char);//определение операция это или нет+
+	int Priority(const char);//РѕРїСЂРµРґРµР»РµРЅРёРµ РїСЂРёРѕСЂРµС‚РµС‚Р° РѕРїРµСЂР°С†РёР№+
+	bool Comparison(char, TStack<char>&);//СЃСЂР°РІРЅРµРЅРёРµ РїСЂРёРѕСЂРёС‚РµС‚РѕРІ+
+	bool IsItOperation(const char);//РѕРїСЂРµРґРµР»РµРЅРёРµ РѕРїРµСЂР°С†РёВ¤ СЌС‚Рѕ РёР»Рё РЅРµС‚+
 public:
 	TCalculator(TypeStack);
-	string PostfixForm(string);//образование постфиксной формы
-	double Calculate(double*, char*, string, int);//возвращает результат подсчета
+	string PostfixForm(string);//РѕР±СЂР°Р·РѕРІР°РЅРёРµ РїРѕСЃС‚С„РёРєСЃРЅРѕР№ С„РѕСЂРјС‹
+	double Calculate(double*, char*, string, int);//РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РїРѕРґСЃС‡РµС‚Р°
 	void GettingOperands(string, char*&, double*&, int&);
 };
 
-template<class ValType>//конструктор
+template<class ValType>//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 TCalculator<ValType>::TCalculator(TypeStack type){
 	Operands = TStack<char>::Create(type);
 	Operations = TStack<char>::Create(type);
 	Values = TStack<double>::Create(type);
 }
-//определение приоретета операций
+//РѕРїСЂРµРґРµР»РµРЅРёРµ РїСЂРёРѕСЂРµС‚РµС‚Р° РѕРїРµСЂР°С†РёР№
 template<class ValType>
 int TCalculator<ValType>::Priority(const char sign) {//done
 	switch (sign) {
@@ -42,11 +42,11 @@ int TCalculator<ValType>::Priority(const char sign) {//done
 }
 
 template<class ValType>
-bool TCalculator<ValType>::Comparison(char exp, TStack<char>& pop_el) {//сравнение приоритетов  done
+bool TCalculator<ValType>::Comparison(char exp, TStack<char>& pop_el) {//СЃСЂР°РІРЅРµРЅРёРµ РїСЂРёРѕСЂРёС‚РµС‚РѕРІ  done
 	return (Priority(pop_el.Pop_Get()) <= Priority(exp));
 
 };
-//определение операция это или нет done
+//РѕРїСЂРµРґРµР»РµРЅРёРµ РѕРїРµСЂР°С†РёВ¤ СЌС‚Рѕ РёР»Рё РЅРµС‚ done
 template<class ValType>
 bool TCalculator<ValType>::IsItOperation(const char sign) {
 	return ((sign == '*') || (sign == '/') || (sign == '+') || (sign == '-'));
@@ -69,7 +69,7 @@ void TCalculator<ValType>::GettingOperands(string p_f, char*& operands, double*&
 			}
 			if (flag == 0) {
 				new_operands[current_count_of_operands] = p_f[i];
-				cout << "введите значение операнда " << p_f[i] << endl;
+				cout << "РІРІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РѕРїРµСЂР°РЅРґР° " << p_f[i] << endl;
 				cin >> value;
 				new_values[current_count_of_operands] = value;
 				current_count_of_operands++;
@@ -77,16 +77,16 @@ void TCalculator<ValType>::GettingOperands(string p_f, char*& operands, double*&
 		}
 	}
 	count = current_count_of_operands;
-	memcpy(values, new_values, sizeof(double) * count);//скопировали 2ое в 1ое
-	memcpy(operands, new_operands, sizeof(char) * count);//скопировали 2ое в 1ое
+	memcpy(values, new_values, sizeof(double) * count);//СЃРєРѕРїРёСЂРѕРІР°Р»Рё 2РѕРµ РІ 1РѕРµ
+	memcpy(operands, new_operands, sizeof(char) * count);//СЃРєРѕРїРёСЂРѕРІР°Р»Рё 2РѕРµ РІ 1РѕРµ
 }
 
 
-//образование постфиксной формы
+//РѕР±СЂР°Р·РѕРІР°РЅРёРµ РїРѕСЃС‚С„РёРєСЃРЅРѕР№ С„РѕСЂРјС‹
 template<class ValType>
 string TCalculator<ValType>::PostfixForm(string exp) {
 	if (exp.length() == 0) {
-		throw Exception("Некорректно введенная строка\n");
+		throw Exception("РЊРµРєРѕСЂСЂРµРєС‚РЅРѕ РІРІРµРґРµРЅРЅР°В¤ СЃС‚СЂРѕРєР°\n");
 	}
 	for (int i = 0; i < exp.length(); i++) {
 		char sign = static_cast<char>(exp[i]);
@@ -94,11 +94,11 @@ string TCalculator<ValType>::PostfixForm(string exp) {
 			continue;
 		}
 		if (IsItOperation(sign)) {
-			if (this->Operations->IsEmpty()) {//если в стеке опраций еще ничего нет 
+			if (this->Operations->IsEmpty()) {//РµСЃР»Рё РІ СЃС‚РµРєРµ РѕРїСЂР°С†РёР№ РµС‰Рµ РЅРёС‡РµРіРѕ РЅРµС‚ 
 				Operations->Push(sign);
 				continue;
 			}
-			if (Comparison(sign, *Operations)) {//битва за приоритет
+			if (Comparison(sign, *Operations)) {//Р±РёС‚РІР° Р·Р° РїСЂРёРѕСЂРёС‚РµС‚
 				while (Comparison(sign, *Operations)) {
 					Operands->Push(Operations->Pop_Get());
 					Operations->Pop();
@@ -129,7 +129,7 @@ string TCalculator<ValType>::PostfixForm(string exp) {
 				break;
 			}
 			if ((left_bracket_flag != 1) && (Operations->IsEmpty())) {
-				throw Exception(" Кажется, вы забыли скобку (\n");
+				throw Exception(" В Р°Р¶РµС‚СЃВ¤, РІС‹ Р·Р°Р±С‹Р»Рё СЃРєРѕР±РєСѓ (\n");
 			}
 		}
 
@@ -151,7 +151,7 @@ string TCalculator<ValType>::PostfixForm(string exp) {
 	return postfix_form;
 }
 
-//подсчет
+//РїРѕРґСЃС‡РµС‚
 template<class ValType>
 double TCalculator<ValType>::Calculate(double* values, char* operands, string p_f, int count){
 	for (int i = 0; i < p_f.length(); i++) {
@@ -184,7 +184,7 @@ double TCalculator<ValType>::Calculate(double* values, char* operands, string p_
 			break;
 		case '/':
 			if (first == 0)
-				throw Exception("На 0 делить нельзя:(\n");
+				throw Exception("РЊР° 0 РґРµР»РёС‚СЊ РЅРµР»СЊР·В¤:(\n");
 			result = second / first;
 			break;
 		}

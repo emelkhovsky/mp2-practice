@@ -1,4 +1,4 @@
-#ifndef _TARRAYSTACK_H_ 
+п»ї#ifndef _TARRAYSTACK_H_ 
 #define _TARRAYSTACK_H_
 #include "exceptions.h"
 using namespace std;
@@ -10,23 +10,23 @@ private:
 	ValType* elements;
 	int top;
 public:
-	TArrayStack(int);//конструктор
-	TArrayStack(const TArrayStack&);//конструктор копирования
-	~TArrayStack();//деструктор
+	TArrayStack(int);//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+	TArrayStack(const TArrayStack&);//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+	~TArrayStack();//РґРµСЃС‚СЂСѓРєС‚РѕСЂ
 
-	void Push(ValType);//кладет элемент на вершину стека
-	ValType Pop_Get() const;//удаляем элемент и возвращаем его
+	void Push(ValType);//РєР»Р°РґРµС‚ СЌР»РµРјРµРЅС‚ РЅР° РІРµСЂС€РёРЅСѓ СЃС‚РµРєР°
+	ValType Pop_Get() const;//СѓРґР°Р»СЏРµРј СЌР»РµРјРµРЅС‚ Рё РІРѕР·РІСЂР°С‰Р°РµРј РµРіРѕ
 
-	bool IsEmpty() const;//проверка на пустоту
-	bool IsFull() const;//проверка на полноту
+	bool IsEmpty() const;//РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
+	bool IsFull() const;//РїСЂРѕРІРµСЂРєР° РЅР° РїРѕР»РЅРѕС‚Сѓ
 
-	void Pop();//уменьшаем стек
+	void Pop();//СѓРјРµРЅСЊС€Р°РµРј СЃС‚РµРє
 };
 
-template<typename ValType>//констркутор с параметром
+template<typename ValType>//РєРѕРЅСЃС‚СЂРєСѓС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂРѕРј
 TArrayStack<ValType>::TArrayStack(int _max_size):max_size(_max_size) {
 	if (_max_size <= 0) {
-		throw Exception("Некорректный максимальный размер стека\n");
+		throw Exception("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ СЃС‚РµРєР°\n");
 	}
 	elements = new ValType[max_size];
 	top = 0;
@@ -35,7 +35,7 @@ TArrayStack<ValType>::TArrayStack(int _max_size):max_size(_max_size) {
 	}
 }
 
-template<typename ValType>//конструктор копирования
+template<typename ValType>//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 TArrayStack<ValType>::TArrayStack(const TArrayStack& stack):max_size(stack.max_size), top(stack.top) {
 	max_size = stack.max_size;
 	top = stack.top;
@@ -44,44 +44,44 @@ TArrayStack<ValType>::TArrayStack(const TArrayStack& stack):max_size(stack.max_s
 	}
 }
 
-template<typename ValType>//деструктор(done)
+template<typename ValType>//РґРµСЃС‚СЂСѓРєС‚РѕСЂ(done)
 TArrayStack<ValType>::~TArrayStack() {
 	top = 0;
 	max_size = 0;
 	delete[] elements;
 }
 
-template<typename ValType>//добавление элемента на вершину стека
+template<typename ValType>//РґРѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РЅР° РІРµСЂС€РёРЅСѓ СЃС‚РµРєР°
 void TArrayStack<ValType>::Push(ValType el) {
 	if (IsFull()) {
-		throw Exception("Стек полон\n");
+		throw Exception("РЎС‚РµРє РїРѕР»РѕРЅ\n");
 	}
 	elements[top] = el;
 	top++;
 }
 
-template<typename ValType>//удаление элемента и получение топа
+template<typename ValType>//СѓРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° Рё РїРѕР»СѓС‡РµРЅРёРµ С‚РѕРїР°
 ValType TArrayStack<ValType>::Pop_Get()const {
 	if (IsEmpty()) {
-		throw Exception("Стек пуст\n");
+		throw Exception("РЎС‚РµРє РїСѓСЃС‚\n");
 	}
 	return elements[top - 1];
 }
 
-template<typename ValType>//проверка на пустоту
+template<typename ValType>//РїСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
 bool TArrayStack<ValType>::IsEmpty() const {
 	return (top == 0);
 }
 
-template<typename ValType>//проверка на полноту
+template<typename ValType>//РїСЂРѕРІРµСЂРєР° РЅР° РїРѕР»РЅРѕС‚Сѓ
 bool TArrayStack<ValType>::IsFull()const {
 	return (max_size == top);
 }
 
-template<typename ValType>//уменьшение стека
+template<typename ValType>//СѓРјРµРЅСЊС€РµРЅРёРµ СЃС‚РµРєР°
 void TArrayStack<ValType>::Pop() {
 	if (IsEmpty()) {
-		throw Exception("Стек пуст\n");
+		throw Exception("РЎС‚РµРє РїСѓСЃС‚\n");
 	}
 	top--;
 }

@@ -1,4 +1,4 @@
-#ifndef _TLIST_H_
+п»ї#ifndef _TLIST_H_
 #define _TLIST_H_
 #include <iostream>
 #include "TNode.h"
@@ -47,22 +47,22 @@ TList<TKey, TData>::TList(const TList& list){
 		pFirst = NULL;
 	}
 	else{
-		pFirst = new TNode<TKey, TData>(*list.pFirst);//создали копию указателя на первый
+		pFirst = new TNode<TKey, TData>(*list.pFirst);//СЃРѕР·РґР°Р»Рё РєРѕРїРёСЋ СѓРєР°Р·Р°С‚РµР»В¤ РЅР° РїРµСЂРІС‹Р№
 		pFirst->pNext = NULL;
 		pCurrent = pFirst;
-		TNode<TKey, TData>* tmp = new TNode<TKey, TData>;//создали новый указатель для цикла
-		tmp = list.pFirst;//в тмп кладем указатель на первый от того, который мы копируем
+		TNode<TKey, TData>* tmp = new TNode<TKey, TData>;//СЃРѕР·РґР°Р»Рё РЅРѕРІС‹Р№ СѓРєР°Р·Р°С‚РµР»СЊ РґР»В¤ С†РёРєР»Р°
+		tmp = list.pFirst;//РІ С‚РјРї РєР»Р°РґРµРј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРІС‹Р№ РѕС‚ С‚РѕРіРѕ, РєРѕС‚РѕСЂС‹Р№ РјС‹ РєРѕРїРёСЂСѓРµРј
 
-		while (tmp->pNext){//создаем цепочку из tmp
+		while (tmp->pNext){//СЃРѕР·РґР°РµРј С†РµРїРѕС‡РєСѓ РёР· tmp
 			tmp = tmp->pNext;
-			pCurrent->pNext = new TNode<TKey, TData>(*tmp);//параллельно с этим создаем цепочку из tmp
-			pPrev = pCurrent;//в предыдущий кладем прошлый текущий
-			pCurrent = pCurrent->pNext;//текущий теперь смещается дальше
-			pNext = NULL;//следующего у нас уже нет
-			pCurrent->pNext = NULL;//текущий объявляем последним
+			pCurrent->pNext = new TNode<TKey, TData>(*tmp);//РїР°СЂР°Р»Р»РµР»СЊРЅРѕ СЃ СЌС‚РёРј СЃРѕР·РґР°РµРј С†РµРїРѕС‡РєСѓ РёР· tmp
+			pPrev = pCurrent;//РІ РїСЂРµРґС‹РґСѓС‰РёР№ РєР»Р°РґРµРј РїСЂРѕС€Р»С‹Р№ С‚РµРєСѓС‰РёР№
+			pCurrent = pCurrent->pNext;//С‚РµРєСѓС‰РёР№ С‚РµРїРµСЂСЊ СЃРјРµС‰Р°РµС‚СЃВ¤ РґР°Р»СЊС€Рµ
+			pNext = NULL;//СЃР»РµРґСѓСЋС‰РµРіРѕ Сѓ РЅР°СЃ СѓР¶Рµ РЅРµС‚
+			pCurrent->pNext = NULL;//С‚РµРєСѓС‰РёР№ РѕР±СЉВ¤РІР»В¤РµРј РїРѕСЃР»РµРґРЅРёРј
 		}
-		pPrev = NULL;//когда закончили с цепочкой предыдущего у нас нет(мы сейчас на первом как бы)
-		pCurrent = pFirst;//текцщий-первый
+		pPrev = NULL;//РєРѕРіРґР° Р·Р°РєРѕРЅС‡РёР»Рё СЃ С†РµРїРѕС‡РєРѕР№ РїСЂРµРґС‹РґСѓС‰РµРіРѕ Сѓ РЅР°СЃ РЅРµС‚(РјС‹ СЃРµР№С‡Р°СЃ РЅР° РїРµСЂРІРѕРј РєР°Рє Р±С‹)
+		pCurrent = pFirst;//С‚РµРєС†С‰РёР№-РїРµСЂРІС‹Р№
 		pNext = pFirst->pNext;
 	}
 };
@@ -77,18 +77,18 @@ TList<TKey, TData>::TList(const TNode<TKey, TData>* first){
 		pFirst = NULL;
 	}
 	else{
-		TNode<TKey, TData>* node = new TNode<TKey, TData>(*first);//создали новый элемент 
-		pFirst = node;//указатель на новый элемент
-		TNode<TKey, TData>* tmp = node->pNext;//в tmp сохранили следующий
-		TNode<TKey, TData>* prev = pFirst;//предыдущий теперь - первый
+		TNode<TKey, TData>* node = new TNode<TKey, TData>(*first);//СЃРѕР·РґР°Р»Рё РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ 
+		pFirst = node;//СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
+		TNode<TKey, TData>* tmp = node->pNext;//РІ tmp СЃРѕС…СЂР°РЅРёР»Рё СЃР»РµРґСѓСЋС‰РёР№
+		TNode<TKey, TData>* prev = pFirst;//РїСЂРµРґС‹РґСѓС‰РёР№ С‚РµРїРµСЂСЊ - РїРµСЂРІС‹Р№
 
 		while (tmp){
-			TNode<TKey, TData>* dop = new TNode<TKey, TData>(*tmp);//создали новый элемент в цепочке
-			prev->pNext = dop;//создаем цепочку из dop
-			prev = dop;//уже когда следующий будем создавать это опять понадобится
+			TNode<TKey, TData>* dop = new TNode<TKey, TData>(*tmp);//СЃРѕР·РґР°Р»Рё РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РІ С†РµРїРѕС‡РєРµ
+			prev->pNext = dop;//СЃРѕР·РґР°РµРј С†РµРїРѕС‡РєСѓ РёР· dop
+			prev = dop;//СѓР¶Рµ РєРѕРіРґР° СЃР»РµРґСѓСЋС‰РёР№ Р±СѓРґРµРј СЃРѕР·РґР°РІР°С‚СЊ СЌС‚Рѕ РѕРїВ¤С‚СЊ РїРѕРЅР°РґРѕР±РёС‚СЃВ¤
 			tmp = tmp->pNext;
 		}
-		pCurrent = pFirst;//текущий-первый
+		pCurrent = pFirst;//С‚РµРєСѓС‰РёР№-РїРµСЂРІС‹Р№
 		pNext = pCurrent->pNext;
 	}
 };
@@ -109,7 +109,7 @@ TList<TKey, TData>::~TList(){
 
 
 template<class TKey, class TData>
-void TList<TKey, TData>::Reset(){//переводит текущий  на первый
+void TList<TKey, TData>::Reset(){//РїРµСЂРµРІРѕРґРёС‚ С‚РµРєСѓС‰РёР№  РЅР° РїРµСЂРІС‹Р№
 	pPrev = NULL;
 	pCurrent = pFirst;
 	if (pFirst) {
@@ -121,7 +121,7 @@ void TList<TKey, TData>::Reset(){//переводит текущий  на первый
 };
 
 template<class TKey, class TData>
-void TList<TKey, TData>::Next(){//сдвиг вправо
+void TList<TKey, TData>::Next(){//СЃРґРІРёРі РІРїСЂР°РІРѕ
 	pPrev = pCurrent;
 	pCurrent = pNext;
 	if (pCurrent) {
@@ -165,7 +165,7 @@ TNode<TKey, TData>* TList<TKey, TData>::Search(TKey key_value){
 	return NULL;
 };
 
-template<class TKey, class TData>//вставка в начало
+template<class TKey, class TData>//РІСЃС‚Р°РІРєР° РІ РЅР°С‡Р°Р»Рѕ
 void TList<TKey, TData>::PushBegin(TKey key_value, TData* data_value){
 	TNode<TKey, TData>* node = new TNode<TKey, TData>(key_value, data_value, pFirst);
 	if (pCurrent == pFirst) {
@@ -182,7 +182,7 @@ void TList<TKey, TData>::PushEnd(TKey key_value, TData* data_value){
 	this->Reset();
 	while (pNext)
 		this->Next();
-	TNode<TKey, TData>* node = new TNode<TKey, TData>(key_value, data_value);//в конец добавили
+	TNode<TKey, TData>* node = new TNode<TKey, TData>(key_value, data_value);//РІ РєРѕРЅРµС† РґРѕР±Р°РІРёР»Рё
 
 	if (!pFirst) {
 		pFirst = node;
@@ -191,7 +191,7 @@ void TList<TKey, TData>::PushEnd(TKey key_value, TData* data_value){
 		pCurrent->pNext = node;
 	}
 
-	if (tmppCurrent == pCurrent) {//если у нас всего один элемент
+	if (tmppCurrent == pCurrent) {//РµСЃР»Рё Сѓ РЅР°СЃ РІСЃРµРіРѕ РѕРґРёРЅ СЌР»РµРјРµРЅС‚
 		pNext = node;
 	}
 	else {
@@ -202,7 +202,7 @@ void TList<TKey, TData>::PushEnd(TKey key_value, TData* data_value){
 };
 
 template<class TKey, class TData>
-void TList<TKey, TData>::PushBefore(TKey nkey, TKey key_value, TData* data_value){//вставка до
+void TList<TKey, TData>::PushBefore(TKey nkey, TKey key_value, TData* data_value){//РІСЃС‚Р°РІРєР° РґРѕ
 	TNode<TKey, TData>* tmppCurrent = pCurrent;
 	TNode<TKey, TData>* tmppNext = pNext;
 	TNode<TKey, TData>* tmppPrev = pPrev;
@@ -216,7 +216,7 @@ void TList<TKey, TData>::PushBefore(TKey nkey, TKey key_value, TData* data_value
 
 	TNode<TKey, TData>* node_search = Search(nkey);
 	if (!node_search){
-		throw Exception("Ваш ключ не найден:(");
+		throw Exception("В¬Р°С€ РєР»СЋС‡ РЅРµ РЅР°Р№РґРµРЅ:(");
 		return;
 	}
 
@@ -243,7 +243,7 @@ void TList<TKey, TData>::PushBefore(TKey nkey, TKey key_value, TData* data_value
 	pCurrent = tmppCurrent;
 };
 
-template<class TKey, class TData>//вставка после
+template<class TKey, class TData>//РІСЃС‚Р°РІРєР° РїРѕСЃР»Рµ
 void TList<TKey, TData>::PushAfter(TKey nkey, TKey key_value, TData* data_value){
 	TNode<TKey, TData>* tmppCurrent = pCurrent;
 	TNode<TKey, TData>* tmppNext = pNext;
@@ -252,7 +252,7 @@ void TList<TKey, TData>::PushAfter(TKey nkey, TKey key_value, TData* data_value)
 	TNode<TKey, TData>* node_search = Search(nkey);
 
 	if (!node_search){
-		throw Exception("Ваш ключ не найден:(");
+		throw Exception("В¬Р°С€ РєР»СЋС‡ РЅРµ РЅР°Р№РґРµРЅ:(");
 		return;
 	}
 
@@ -279,12 +279,12 @@ void TList<TKey, TData>::PushAfter(TKey nkey, TKey key_value, TData* data_value)
 };
 
 template<class TKey, class TData>
-void TList<TKey, TData>::Delete(TKey key_value){//удаление
+void TList<TKey, TData>::Delete(TKey key_value){//СѓРґР°Р»РµРЅРёРµ
 	if (!pFirst)
-		throw Exception("Список пуст:(");
+		throw Exception("вЂ”РїРёСЃРѕРє РїСѓСЃС‚:(");
 
 	if (pFirst->key == key_value){
-		if (pCurrent == pFirst){//если первый
+		if (pCurrent == pFirst){//РµСЃР»Рё РїРµСЂРІС‹Р№
 			pCurrent = pNext;
 			if (pNext) {
 				pNext = pNext->pNext;
@@ -297,7 +297,7 @@ void TList<TKey, TData>::Delete(TKey key_value){//удаление
 			return;
 		}
 
-		if (pCurrent == pFirst->pNext){//если второй
+		if (pCurrent == pFirst->pNext){//РµСЃР»Рё РІС‚РѕСЂРѕР№
 			pPrev = NULL;
 			delete pFirst;
 			pFirst = pCurrent;
@@ -315,7 +315,7 @@ void TList<TKey, TData>::Delete(TKey key_value){//удаление
 	TNode<TKey, TData>* node_search = Search(key_value);
 
 	if (!node_search){
-		throw Exception("Ключ не найден:(");
+		throw Exception("В Р»СЋС‡ РЅРµ РЅР°Р№РґРµРЅ:(");
 		return;
 	}
 
@@ -355,7 +355,7 @@ void TList<TKey, TData>::Delete(TKey key_value){//удаление
 template<class TKey, class TData>
 ostream& operator<<(ostream& _out, TList<TKey, TData>& f_list){
 	if (!f_list.pFirst){
-		_out << "Список пуст:(" << endl;
+		_out << "вЂ”РїРёСЃРѕРє РїСѓСЃС‚:(" << endl;
 		return _out;;
 	}
 

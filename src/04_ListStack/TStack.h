@@ -1,4 +1,4 @@
-#ifndef _TSTACK_H_
+п»ї#ifndef _TSTACK_H_
 #define _TSTACK_H_
 
 enum TypeStack {
@@ -28,7 +28,7 @@ TStack<ValType>* TStack<ValType>::Create(TypeStack type) {
 	if (type == LStack) {
 		return new TListStack<ValType>();
 	}
-	throw Exception("Некорректный тип стека\n");
+	throw Exception("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С‚РёРї СЃС‚РµРєР°\n");
 }
 
 

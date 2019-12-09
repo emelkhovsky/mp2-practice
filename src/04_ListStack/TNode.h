@@ -1,4 +1,4 @@
-#ifndef _TNODE_H_
+﻿#ifndef _TNODE_H_
 #define _TNODE_H_
 
 template<class TKey, class TData>

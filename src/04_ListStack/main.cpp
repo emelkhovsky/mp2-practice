@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <string>
 #include "TCalculator.h"
 #include "TList.h"
@@ -9,37 +9,37 @@ void main() {
 	string expression;
 	string operands;
 	setlocale(LC_ALL, "Rus");
-	cout << "Ââåäèòå âûðàæåíèå" << endl;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð²Ñ‹Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ" << endl;
 	getline(cin, expression);
 	try {
-		cout << "Ââåäèòå 1, åñëè õîòèòå âûáðàòü ñïîñîá ñî ñïèñêàìè, ââåäèòå 0, åñëè õîòèòå âûáðàòü ñïîñîá ñ ìàññèâàìè" << endl;
+		cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ 1, ÐµÑÐ»Ð¸ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð²Ñ‹Ð±Ñ€Ð°Ñ‚ÑŒ ÑÐ¿Ð¾ÑÐ¾Ð± ÑÐ¾ ÑÐ¿Ð¸ÑÐºÐ°Ð¼Ð¸, Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ 0, ÐµÑÐ»Ð¸ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð²Ñ‹Ð±Ñ€Ð°Ñ‚ÑŒ ÑÐ¿Ð¾ÑÐ¾Ð± Ñ Ð¼Ð°ÑÑÐ¸Ð²Ð°Ð¼Ð¸" << endl;
 		int choice;
 		cin >> choice;
 		if (choice == 0) {
 			TCalculator<double> postfix(AStack);	
 			string p_f = postfix.PostfixForm(expression);
-			cout << "Ïîñòôèêñíàÿ ôîðìà ðàâíà:" << endl;
+			cout << "ÐŸÐ¾ÑÑ‚Ñ„Ð¸ÐºÑÐ½Ð°Ñ Ñ„Ð¾Ñ€Ð¼Ð° Ñ€Ð°Ð²Ð½Ð°:" << endl;
 			cout << p_f << endl;
 			int count = 0;
 			char* operands = new char[p_f.length()];
 			double* values = new double[p_f.length()];
 			postfix.GettingOperands(p_f, operands, values, count);
-			cout << "Êîëè÷åñòâî íåïîâòîðÿþùèõñÿ îïåðàíäîâ:" << count << endl;//(âîò äî ýòîãî ìîìåíòà âñå ñóïåð)
+			cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð½ÐµÐ¿Ð¾Ð²Ñ‚Ð¾Ñ€ÑÑŽÑ‰Ð¸Ñ…ÑÑ Ð¾Ð¿ÐµÑ€Ð°Ð½Ð´Ð¾Ð²:" << count << endl;//(Ð²Ð¾Ñ‚ Ð´Ð¾ ÑÑ‚Ð¾Ð³Ð¾ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚Ð° Ð²ÑÐµ ÑÑƒÐ¿ÐµÑ€)
 			double result =postfix.Calculate(values, operands, p_f, count);
-			cout << "Âàø ðåçóëüòàò: " << result << endl;
+			cout << "Ð’Ð°Ñˆ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚: " << result << endl;
 		}
 		else {
 			TCalculator<double> postfix(LStack);
 			string p_f = postfix.PostfixForm(expression);
-			cout << "Ïîñòôèêñíàÿ ôîðìà ðàâíà:" << endl;
+			cout << "ÐŸÐ¾ÑÑ‚Ñ„Ð¸ÐºÑÐ½Ð°Ñ Ñ„Ð¾Ñ€Ð¼Ð° Ñ€Ð°Ð²Ð½Ð°:" << endl;
 			cout << p_f << endl;
 			int count = 0;
 			char* operands = new char[p_f.length()];
 			double* values = new double[p_f.length()];
 			postfix.GettingOperands(p_f, operands, values, count);
-			cout << "Êîëè÷åñòâî íåïîâòîðÿþùèõñÿ îïåðàíäîâ:" << count << endl;//(âîò äî ýòîãî ìîìåíòà âñå ñóïåð)
+			cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð½ÐµÐ¿Ð¾Ð²Ñ‚Ð¾Ñ€ÑÑŽÑ‰Ð¸Ñ…ÑÑ Ð¾Ð¿ÐµÑ€Ð°Ð½Ð´Ð¾Ð²:" << count << endl;//(Ð²Ð¾Ñ‚ Ð´Ð¾ ÑÑ‚Ð¾Ð³Ð¾ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚Ð° Ð²ÑÐµ ÑÑƒÐ¿ÐµÑ€)
 			double result = postfix.Calculate(values, operands, p_f, count);
-			cout << "Âàø ðåçóëüòàò: " << result << endl;
+			cout << "Ð’Ð°Ñˆ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚: " << result << endl;
 		}
 
 	}
