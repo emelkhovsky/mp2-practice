@@ -47,19 +47,16 @@ TList<TKey, TData>::TList(const TList& list){
 		pFirst = NULL;
 	}
 	else{
-		pFirst = new TNode<TKey, TData>(*list.pFirst);//создали копию указател¤ на первый
-		pFirst->pNext = NULL;
+		pFirst = new TNode<TKey, TData>(*list.pFirst, NULL);//создали копию указател¤ на первый		
 		pCurrent = pFirst;
-		TNode<TKey, TData>* tmp = new TNode<TKey, TData>;//создали новый указатель дл¤ цикла
-		tmp = list.pFirst;//в тмп кладем указатель на первый от того, который мы копируем
+		TNode<TKey, TData>* tmp = list.pFirst;//в тмп кладем указатель на первый от того, который мы копируем
 
 		while (tmp->pNext){//создаем цепочку из tmp
 			tmp = tmp->pNext;
-			pCurrent->pNext = new TNode<TKey, TData>(*tmp);//параллельно с этим создаем цепочку из tmp
+			pCurrent->pNext = new TNode<TKey, TData>(*tmp, NULL);//параллельно с этим создаем цепочку из tmp
 			pPrev = pCurrent;//в предыдущий кладем прошлый текущий
 			pCurrent = pCurrent->pNext;//текущий теперь смещаетс¤ дальше
 			pNext = NULL;//следующего у нас уже нет
-			pCurrent->pNext = NULL;//текущий объ¤вл¤ем последним
 		}
 		pPrev = NULL;//когда закончили с цепочкой предыдущего у нас нет(мы сейчас на первом как бы)
 		pCurrent = pFirst;//текцщий-первый
@@ -76,7 +73,7 @@ TList<TKey, TData>::TList(const TNode<TKey, TData>* first){
 	if (!first) {
 		pFirst = NULL;
 	}
-	else{
+	else{// !!!!!!!!!!!!
 		TNode<TKey, TData>* node = new TNode<TKey, TData>(*first);//создали новый элемент 
 		pFirst = node;//указатель на новый элемент
 		TNode<TKey, TData>* tmp = node->pNext;//в tmp сохранили следующий
@@ -149,20 +146,14 @@ TNode<TKey, TData>* TList<TKey, TData>::Search(TKey key_value){
 	TNode<TKey, TData>* tmppPrev = pPrev;
 	this->Reset();
 
-	while (!this->End()){
-		if (key_value == pCurrent->key){
-			TNode<TKey, TData>* node = pCurrent;
-			pCurrent = tmppCurrent;
-			pNext = tmppNext;
-			pPrev = tmppPrev;
-			return node;
-		}
+	while (!this->End() && (key_value != pCurrent->key)){
 		this->Next();
 	}
+	TNode<TKey, TData>* node = this->pCurrent;
 	pCurrent = tmppCurrent;
 	pNext = tmppNext;
 	pPrev = tmppPrev;
-	return NULL;
+	return node;
 };
 
 template<class TKey, class TData>//вставка в начало
@@ -333,14 +324,14 @@ void TList<TKey, TData>::Delete(TKey key_value){//удаление
 
 	if (tmppCurrent == pPrev){
 		pCurrent = pPrev;
-		pPrev = tmppPrev;
+		pPrev = tmppPrev;/////
 		pNext = pCurrent->pNext;
 		delete node_search;
 		return;
 	}
 
 	if (tmppCurrent == pNext){
-		pCurrent = pNext;
+		pCurrent = pNext;///////////
 		pNext = pCurrent->pNext;
 		delete node_search;
 		return;

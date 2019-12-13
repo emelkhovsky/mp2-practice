@@ -44,9 +44,19 @@ bool TListStack<ValType>::IsEmpty()const{
 };
 
 template<typename ValType>
-bool TListStack<ValType>::IsFull() const{
-	TNode<ValType, ValType>* node = new TNode<ValType, ValType>();
-	return !node;
+bool TListStack<ValType>::IsFull() const {
+	try
+	{
+		TNode<ValType, ValType>* node = new TNode<ValType, ValType>();
+		if (node == NULL)
+			return true;
+		delete node;		
+	}
+	catch (...)
+	{
+		return true;
+	}
+	return false;
 };
 
 template<typename ValType>
@@ -54,7 +64,6 @@ void TListStack<ValType>::Push(ValType els){
 	if (IsFull())
 		throw Exception("Стек полон:(");
 	elements->PushBegin(els, NULL);
-	elements->Reset();
 };
 
 template<typename ValType>
@@ -62,7 +71,6 @@ void TListStack<ValType>::Pop(){
 	if (IsEmpty())
 		throw Exception("Стек пуст:(");
 	elements->Delete(elements->GetpFirst()->key);
-	elements->Reset();
 };
 
 template<typename ValType>

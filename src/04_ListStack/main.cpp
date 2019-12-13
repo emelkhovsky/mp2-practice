@@ -24,7 +24,7 @@ void main() {
 			char* operands = new char[p_f.length()];
 			double* values = new double[p_f.length()];
 			postfix.GettingOperands(p_f, operands, values, count);
-			cout << "Количество неповторяющихся операндов:" << count << endl;//(вот до этого момента все супер)
+			cout << "Количество неповторяющихся операндов:" << count << endl;
 			double result =postfix.Calculate(values, operands, p_f, count);
 			cout << "Ваш результат: " << result << endl;
 		}
@@ -37,7 +37,7 @@ void main() {
 			char* operands = new char[p_f.length()];
 			double* values = new double[p_f.length()];
 			postfix.GettingOperands(p_f, operands, values, count);
-			cout << "Количество неповторяющихся операндов:" << count << endl;//(вот до этого момента все супер)
+			cout << "Количество неповторяющихся операндов:" << count << endl;
 			double result = postfix.Calculate(values, operands, p_f, count);
 			cout << "Ваш результат: " << result << endl;
 		}
