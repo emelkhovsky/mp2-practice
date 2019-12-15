@@ -18,10 +18,18 @@ public:
 //определение приоретета операций
  int TCalculator:: Priority(const char sign) {
     switch (sign) {
-    case '+': return 2;
-    case '-': return 2;
-    case '*': return 1;
-    case '/': return 1;
+	case '(':
+		return 1;
+	case ')':
+		return 1;
+	case '+':
+		return 2;
+	case '-':
+		return 2;
+	case '*':
+		return 3;
+	case '/':
+		return 3;
     default: return 3;
     }
 }
@@ -31,7 +39,7 @@ public:
  };
 //определение операция это или нет
  bool TCalculator::IsItOperation(const char sign) {
-    return ((sign == '*') || (sign == '/') || (sign == '+') || (sign == '-'));
+    return ((sign == '*') || (sign == '/') || (sign == '+') || (sign == '-') || (sign == ')') || (sign == '('));
 }
 
  void TCalculator::GettingOperands(string p_f, char*& operands, double*& values, int& count) {
@@ -69,54 +77,65 @@ public:
     if (exp.length() == 0) {
         throw Exception("Некорректно введенная строка\n");
     }
+	int countOfLeftBrackets = 0;
+	int countOfRightBrackets = 0;
+
+
     TStack<char> stack1(exp.length() + 1);//операции
     TStack<char> stack2(exp.length() + 1);//операнды
     for (int i = 0; i < exp.length(); i++) {
         char sign = static_cast<char>(exp[i]);
+		cout << sign << endl;
 		if (sign == ' ') {
 			continue;
 		}
-		if (IsItOperation(sign)) {
-			if (stack1.IsEmpty()) {//если в стеке опраций еще ничего нет 
+		if (IsItOperation(sign)){
+			if (sign == '('){
+				stack1.Push(sign);
+				countOfLeftBrackets++;
+				continue;
+			}
+			if (sign == ')'){
+				countOfRightBrackets++;
+				while (!stack1.IsEmpty()){
+					if (stack1.Pop_Get() != '('){
+						stack2.Push(stack1.Pop_Get());
+						stack1.Pop();
+						continue;
+					}
+					stack1.Pop();
+					break;
+				}
+				continue;
+			}
+			if ((stack1.IsEmpty()) || (Priority(sign) >= Priority(stack1.Pop_Get()))){
 				stack1.Push(sign);
 				continue;
 			}
-			if (Comparison(sign, stack1)) {//битва за приоритет
-				while (!stack1.IsEmpty()) {
-					stack2.Push(stack1.Pop_Get());
-					stack1.Pop();
-				}
-				stack1.Push(sign);
-			}
-			else
-				stack1.Push(sign);
-		}
 
-		if (sign == '(') {
-			stack1.Push(sign);
-		}
-		if (isalpha(sign)) {
-			stack2.Push(sign);
-		}
-		if (sign == ')') {
-			int left_bracket_flag = 0;
-			while (!stack1.IsEmpty()) {
-				if (stack1.Pop_Get() != '(') {
-					cout << stack1.Pop_Get() << endl;
-					stack2.Push(stack1.Pop_Get());
-					stack1.Pop();
-					continue;
-				}
+			while ((!stack1.IsEmpty()) && (Priority(sign) <= Priority(stack1.Pop_Get()))){
+				stack2.Push(stack1.Pop_Get());
 				stack1.Pop();
-				left_bracket_flag = 1;
-				break;
 			}
-			if ((left_bracket_flag != 1) && (stack1.IsEmpty())) {
-				throw Exception(" Кажется, вы забыли скобку (\n");
-			}
+			stack1.Push(sign);
+			continue;
+		}
+		if (isalpha(sign)){
+			stack2.Push(sign);
+			continue;
+		}
+		throw Exception("некорректные символы"); 
+	}
+	if (countOfLeftBrackets != countOfRightBrackets) {
+		if (countOfLeftBrackets < countOfRightBrackets) {
+			throw Exception("вы забыли левую скобку");
+		}
+		else {
+			throw Exception("вы забыли правую скобку");
 		}
 
-    }
+	}
+
     while (!stack1.IsEmpty()){
         stack2.Push(stack1.Pop_Get());
         stack1.Pop();
