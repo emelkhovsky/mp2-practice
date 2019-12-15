@@ -79,8 +79,6 @@ public:
     }
 	int countOfLeftBrackets = 0;
 	int countOfRightBrackets = 0;
-
-
     TStack<char> stack1(exp.length() + 1);//операции
     TStack<char> stack2(exp.length() + 1);//операнды
     for (int i = 0; i < exp.length(); i++) {
@@ -108,7 +106,7 @@ public:
 				}
 				continue;
 			}
-			if ((stack1.IsEmpty()) || (Priority(sign) >= Priority(stack1.Pop_Get()))){
+			if ((stack1.IsEmpty()) || (Priority(sign) > Priority(stack1.Pop_Get()))){
 				stack1.Push(sign);
 				continue;
 			}
