@@ -7,7 +7,6 @@ using namespace std;
 class TCalculator {
 private:
 	static int Priority(const char);//определение приоретета операций
-	static bool Comparison(char, TStack<char>&);//сравнение приоритетов
 	static bool IsItOperation(const char);//определение операция это или нет
 public: 
     static string PostfixForm(string);//образование постфиксной формы
@@ -30,13 +29,10 @@ public:
 		return 3;
 	case '/':
 		return 3;
-    default: return 3;
+    default: 
+		throw Exception("Некорректно введенный символ\n");
     }
 }
- bool TCalculator::Comparison(char exp, TStack<char>& pop_el){//сравнение приоритетов 
-	 return (Priority(pop_el.Pop_Get()) < Priority(exp));
-
- };
 //определение операция это или нет
  bool TCalculator::IsItOperation(const char sign) {
     return ((sign == '*') || (sign == '/') || (sign == '+') || (sign == '-') || (sign == ')') || (sign == '('));
@@ -45,8 +41,8 @@ public:
  void TCalculator::GettingOperands(string p_f, char*& operands, double*& values, int& count) {
 	 int current_count_of_operands = 0;
 	 double value = 0;
-	 char* new_operands = new char[count];
-	 double* new_values = new double[count];
+	 char* new_operands = new char[p_f.length()];
+	 double* new_values = new double[p_f.length()];
 	 for (int i = 0; i < p_f.length(); i++) {
 		 if (isalpha(p_f[i])) {
 			 count++;
