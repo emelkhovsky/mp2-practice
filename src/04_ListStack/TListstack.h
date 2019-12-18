@@ -24,57 +24,56 @@ public:
 };
 
 template<typename ValType>
-TListStack<ValType>::TListStack(){//конструктор
+TListStack<ValType>::TListStack() {//конструктор
 	elements = new TList<ValType, ValType>;
 };
 
 template<typename ValType>
-TListStack<ValType>::TListStack(const TListStack<ValType>& list){//конструктор копирования
-	elements = new TList<ValType>(list.elements);
+TListStack<ValType>::TListStack(const TListStack<ValType>& list) {//конструктор копирования
+	elements = new TList<ValType, ValType>(list.elements);
 };
 
 template<typename ValType>
-TListStack<ValType>::~TListStack(){//деструктор
-	delete[] elements;
+TListStack<ValType>::~TListStack() {//деструктор
+	delete elements;
 };
 
 template<class ValType>
-bool TListStack<ValType>::IsEmpty()const{
+bool TListStack<ValType>::IsEmpty()const {
 	return (elements->GetpFirst() == NULL);
 };
 
 template<typename ValType>
 bool TListStack<ValType>::IsFull() const {
-	try
-	{
+	try{
 		TNode<ValType, ValType>* node = new TNode<ValType, ValType>();
 		if (node == NULL)
 			return true;
-		delete node;		
+		delete node;
 	}
-	catch (...)
-	{
+	catch (...){
 		return true;
 	}
 	return false;
 };
 
 template<typename ValType>
-void TListStack<ValType>::Push(ValType els){
+void TListStack<ValType>::Push(ValType els) {
 	if (IsFull())
 		throw Exception("Стек полон:(");
 	elements->PushBegin(els, NULL);
+	elements->Reset();
 };
 
 template<typename ValType>
-void TListStack<ValType>::Pop(){
+void TListStack<ValType>::Pop() {
 	if (IsEmpty())
 		throw Exception("Стек пуст:(");
-	elements->Delete(elements->GetpFirst()->key);
+	elements->Remove(elements->GetpFirst()->key);
 };
 
 template<typename ValType>
-ValType TListStack<ValType>::Pop_Get() const{
+ValType TListStack<ValType>::Pop_Get() const {
 	if (IsEmpty())
 		throw Exception("Стек пуст:(");
 	return elements->GetpFirst()->key;

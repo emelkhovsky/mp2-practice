@@ -14,7 +14,6 @@ private:
 	TStack<char>* Operations;
 	TStack<ValType>* Values;
 	int Priority(const char);//определение приоретета операций+
-	bool Comparison(char, TStack<char>&);//сравнение приоритетов+
 	bool IsItOperation(const char);//определение операци¤ это или нет+
 public:
 	TCalculator(TypeStack);
@@ -33,23 +32,27 @@ TCalculator<ValType>::TCalculator(TypeStack type){
 template<class ValType>
 int TCalculator<ValType>::Priority(const char sign) {//done
 	switch (sign) {
-	case '+': return 2;
-	case '-': return 2;
-	case '*': return 1;
-	case '/': return 1;
-	default: return 3;
+	case '(':
+		return 1;
+	case ')':
+		return 1;
+	case '+':
+		return 2;
+	case '-':
+		return 2;
+	case '*':
+		return 3;
+	case '/':
+		return 3;
+	default:
+		throw Exception("Некорректно введенный символ\n");
 	}
 }
 
-template<class ValType>
-bool TCalculator<ValType>::Comparison(char exp, TStack<char>& pop_el) {//сравнение приоритетов  done
-	return (Priority(pop_el.Pop_Get()) <= Priority(exp));
-
-};
 //определение операци¤ это или нет done
 template<class ValType>
 bool TCalculator<ValType>::IsItOperation(const char sign) {
-	return ((sign == '*') || (sign == '/') || (sign == '+') || (sign == '-'));
+	return ((sign == '*') || (sign == '/') || (sign == '+') || (sign == '-') || (sign == ')') || (sign == '('));
 }
 
 template<class ValType>
@@ -88,52 +91,61 @@ string TCalculator<ValType>::PostfixForm(string exp) {
 	if (exp.length() == 0) {
 		throw Exception("Ќекорректно введенна¤ строка\n");
 	}
+	int countOfLeftBrackets = 0;
+	int countOfRightBrackets = 0;
 	for (int i = 0; i < exp.length(); i++) {
 		char sign = static_cast<char>(exp[i]);
+		cout << sign << endl;
 		if (sign == ' ') {
 			continue;
 		}
 		if (IsItOperation(sign)) {
-			if (this->Operations->IsEmpty()) {//если в стеке опраций еще ничего нет 
+			if (sign == '(') {
+				Operations->Push(sign);
+				countOfLeftBrackets++;
+				continue;
+			}
+			if (sign == ')') {
+				countOfRightBrackets++;
+				while (!Operations->IsEmpty()) {
+					if (Operations->Pop_Get() != '(') {
+						Operands->Push(Operations->Pop_Get());
+						Operations->Pop();
+						continue;
+					}
+					Operations->Pop();
+					break;
+				}
+				continue;
+			}
+			if ((Operations->IsEmpty()) || (Priority(sign) > Priority(Operations->Pop_Get()))) {
 				Operations->Push(sign);
 				continue;
 			}
-			if (Comparison(sign, *Operations)) {//битва за приоритет
-				while (Comparison(sign, *Operations)) {
-					Operands->Push(Operations->Pop_Get());
-					Operations->Pop();
-				}
-				Operations->Push(sign);
-			}
-			else
-				Operations->Push(sign);
-		}
 
-		if (sign == '(') {
+			while ((!Operations->IsEmpty()) && (Priority(sign) <= Priority(Operations->Pop_Get()))) {
+				Operands->Push(Operations->Pop_Get());
+				Operations->Pop();
+			}
 			Operations->Push(sign);
+			continue;
 		}
 		if (isalpha(sign)) {
 			Operands->Push(sign);
+			continue;
 		}
-		if (sign == ')') {
-			int left_bracket_flag = 0;
-			while (!Operations->IsEmpty()) {
-				if (Operations->Pop_Get() != '(') {
-					cout << Operations->Pop_Get() << endl;
-					Operands->Push(Operations->Pop_Get());
-					Operations->Pop();
-					continue;
-				}
-				Operations->Pop();
-				left_bracket_flag = 1;
-				break;
-			}
-			if ((left_bracket_flag != 1) && (Operations->IsEmpty())) {
-				throw Exception("  ажетс¤, вы забыли скобку (\n");
-			}
-		}
-
+		throw Exception("некорректные символы");
 	}
+
+	if (countOfLeftBrackets != countOfRightBrackets) {
+		if (countOfLeftBrackets < countOfRightBrackets) {
+			throw Exception("вы забыли левую скобку");
+		}
+		else {
+			throw Exception("вы забыли правую скобку");
+		}
+	}
+
 	while (!Operations->IsEmpty()) {
 		Operands->Push(Operations->Pop_Get());
 		Operations->Pop();
