@@ -66,17 +66,24 @@ TList<TKey, TData>::TList(const TList& list) {
 
 template<class TKey, class TData>//done
 TList<TKey, TData>::TList(const TNode<TKey, TData>* first) {
-	pFirst = new TNode<TKey, TData>(*first);
-	TNode<TKey, TData>* node = first;
-	TNode<TKey, TData>* tmp = pFirst;
-	while (tmp->pNext != nullptr){
-		node->pNext = new TNode<TKey, TData>(*(tmp->pNext));
-		node = node->pNext;
-		tmp = tmp->pNext;
+	pNext = pPrev = pCurrent = NULL;
+	if (!first)
+		pFirst = NULL;
+	else{
+		TNode<TKey, TData>* node = new TNode<TKey, TData>(*first);
+		pFirst = node;
+		TNode<TKey, TData>* tmp = first->pNext;
+		TNode<TKey, TData>* prev = pFirst;
+		while (tmp){
+			TNode<TKey, TData>* n = new TNode<TKey, TData>(*tmp);
+			prev->pNext = n;
+			prev = n;
+			tmp = tmp->pNext;
+		}
+
+		pCurrent = pFirst;
+		pNext = pCurrent->pNext;
 	}
-	pPrev = nullptr;
-	pCurrent = pFirst;
-	pNext = pFirst->pNext;
 };
 
 template<class TKey, class TData>//done
