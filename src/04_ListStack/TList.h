@@ -160,7 +160,6 @@ void TList<TKey, TData>::PushBegin(TKey key_value, TData* data_value) {
 		return;
 	};
 	TNode<TKey, TData>* node = new TNode<TKey, TData>(key_value, data_value, pFirst);
-	node->pNext = pFirst;
 	if (pCurrent == pFirst)
 		pPrev = node;
 	pFirst = node;
