@@ -79,7 +79,6 @@ public:
     TStack<char> stack2(exp.length() + 1);//операнды
     for (int i = 0; i < exp.length(); i++) {
         char sign = static_cast<char>(exp[i]);
-		cout << sign << endl;
 		if (sign == ' ') {
 			continue;
 		}
