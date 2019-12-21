@@ -39,27 +39,29 @@ TList<TKey, TData>::TList() {
 
 template<class TKey, class TData>//done
 TList<TKey, TData>::TList(const TList& list) {
-	pNext = NULL;
-	pPrev = NULL;
-	pCurrent = NULL;
+	pNext = pPrev = pCurrent = NULL;
 
-	if (!list.pFirst) {
+	if (!list.pFirst)
 		pFirst = NULL;
-	}
-	else {
-		pFirst = new TNode<TKey, TData>(*list.pFirst, NULL);//создали копию указател¤ на первый		
+	else{
+		pFirst = new TNode<TKey, TData>(*list.pFirst);
+		pFirst->pNext = NULL;
 		pCurrent = pFirst;
-		TNode<TKey, TData>* tmp = list.pFirst;//в тмп кладем указатель на первый от того, который мы копируем
+		TNode<TKey, TData>* iter = new TNode<TKey, TData>;
+		iter = list.pFirst;
 
-		while (tmp->pNext) {//создаем цепочку из tmp
-			tmp = tmp->pNext;
-			pCurrent->pNext = new TNode<TKey, TData>(*tmp, NULL);//параллельно с этим создаем цепочку из tmp
-			pPrev = pCurrent;//в предыдущий кладем прошлый текущий
-			pCurrent = pCurrent->pNext;//текущий теперь смещаетс¤ дальше
-			pNext = NULL;//следующего у нас уже нет
+		while (iter->pNext)
+		{
+			iter = iter->pNext;
+			pCurrent->pNext = new TNode<TKey, TData>(*iter);
+
+			pPrev = pCurrent;
+			pCurrent = pCurrent->pNext;
+			pNext = pCurrent->pNext = NULL;
 		}
-		pPrev = NULL;//когда закончили с цепочкой предыдущего у нас нет(мы сейчас на первом как бы)
-		pCurrent = pFirst;//текцщий-первый
+
+		pPrev = NULL;
+		pCurrent = pFirst;
 		pNext = pFirst->pNext;
 	}
 };
