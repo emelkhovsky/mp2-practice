@@ -1,4 +1,4 @@
-#ifndef _TPOLINOM_H_
+п»ї#ifndef _TPOLINOM_H_
 #define _TPOLINOM_H_
 
 #include <cstring>
@@ -12,7 +12,6 @@ using namespace std;
 class TPolinom{
 private:
 	TList<int, float>* monoms;
-
 	void CastToDefault();
 public:
 	TPolinom();
@@ -31,13 +30,13 @@ public:
 	friend ostream& operator<<(ostream&, TPolinom&);
 };
 
-TPolinom::TPolinom(){//конструктор
+TPolinom::TPolinom(){//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	monoms = new TList<int, float>();
 };
 
 TPolinom::TPolinom(const string& st){
 	if (!st.length())
-		throw Exception("строка пуста");
+		throw Exception("СЃС‚СЂРѕРєР° РїСѓСЃС‚Р°");
 
 	monoms = new TList<int, float>;
 	int kol = 0;
@@ -72,7 +71,7 @@ TPolinom::TPolinom(const string& st){
 			if (isdigit(symbol) && cofficient_flag && point && !degree_flag){
 				int cofficient_int = static_cast<int>(cofficient);
 				float cofficient_float = cofficient;
-				float ex = (static_cast<int>(symbol) - 48) / 10.;//берем десятичную часть
+				float ex = (static_cast<int>(symbol) - 48) / 10.;//Р±РµСЂРµРј РґРµСЃСЏС‚РёС‡РЅСѓСЋ С‡Р°СЃС‚СЊ
 				while (cofficient_int != cofficient_float){
 					ex /= 10.;
 					cofficient_float *= 10.;
@@ -116,7 +115,7 @@ TPolinom::TPolinom(const string& st){
 
 			if (symbol == '^'){
 				if (!(x_flag || y_flag || z_flag)) {
-					throw Exception("вы забыли ввести перменную x, y или z");
+					throw Exception("РІС‹ Р·Р°Р±С‹Р»Рё РІРІРµСЃС‚Рё РїРµСЂРјРµРЅРЅСѓСЋ x, y РёР»Рё z");
 				}
 				degree_flag = true;
 				kol++;
@@ -125,7 +124,7 @@ TPolinom::TPolinom(const string& st){
 
 			if (degree_flag){
 				if (!(x_flag || y_flag || z_flag)) {
-					throw Exception("вы забыли ввести перменную x, y или z");
+					throw Exception("РІС‹ Р·Р°Р±С‹Р»Рё РІРІРµСЃС‚Рё РїРµСЂРјРµРЅРЅСѓСЋ x, y РёР»Рё z");
 				}
 				if (x_flag) {
 					degree = degree + (static_cast<int>(symbol) - 48) * 100;
@@ -143,7 +142,7 @@ TPolinom::TPolinom(const string& st){
 				kol++;
 				continue;
 			}
-			throw Exception("Некорректный ввод строки");
+			throw Exception("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ СЃС‚СЂРѕРєРё");
 		}
 
 		if (minus && (cofficient != 0))
@@ -165,7 +164,7 @@ TPolinom::TPolinom(const string& st){
 TPolinom::TPolinom(TList<int, float>* monms){
 	while (!monms->End()){
 		if (monms->GetpCurrent()->key > 999)
-			throw Exception("Степень слишком большая, введите поменьше:)");
+			throw Exception("РЎС‚РµРїРµРЅСЊ СЃР»РёС€РєРѕРј Р±РѕР»СЊС€Р°СЏ, РІРІРµРґРёС‚Рµ РїРѕРјРµРЅСЊС€Рµ:)");
 		monms->Next();
 	}
 	monoms = new TList<int, float>(*monms);
@@ -174,19 +173,18 @@ TPolinom::TPolinom(TList<int, float>* monms){
 
 TPolinom::TPolinom(const TPolinom& cop){
 	monoms = new TList<int, float>(*cop.monoms);
-	this->CastToDefault();
 };
 
-TPolinom::~TPolinom(){//деструктор
+TPolinom::~TPolinom(){//РґРµСЃС‚СЂСѓРєС‚РѕСЂ
 	delete monoms;
 };
 
 
 void TPolinom::CastToDefault(){
 	if (!monoms->GetpFirst())
-		throw Exception("Полином пуст:(");
+		throw Exception("РџРѕР»РёРЅРѕРј РїСѓСЃС‚:(");
 	monoms->Reset();
-
+	monoms->Sort();
 	while (!monoms->End()){
 		TNode<int, float>* tmpPrev = monoms->GetpFirst();
 		while (tmpPrev->key != monoms->GetpCurrent()->key) {
@@ -200,10 +198,10 @@ void TPolinom::CastToDefault(){
 		monoms->Remove(tmpPrev->key);
 		monoms->Next();
 	}
-	monoms->Sort();
+
 };
 
-//-------------------------------------------ПЕРЕГРУЗКИ------------------------------------------//
+//-------------------------------------------РџР•Р Р•Р“Р РЈР—РљР------------------------------------------//
 const TPolinom& TPolinom::operator=(const TPolinom& cop){
 	if (*this == cop)
 		return *this;
@@ -223,17 +221,19 @@ TPolinom TPolinom::operator+(const TPolinom& cop){
 			tmp.monoms->Next();
 		}
 
-		if (!tmp.monoms->GetpCurrent()){//если мы не дошли до конца
+		if (!tmp.monoms->GetpCurrent()){//РµСЃР»Рё РјС‹ РЅРµ РґРѕС€Р»Рё РґРѕ РєРѕРЅС†Р°
 			tmp.monoms->PushEnd(cop.monoms->GetpCurrent()->key, cop.monoms->GetpCurrent()->data);
 			cop.monoms->Next();
 			continue;
 		}
 		//
-		tmp.monoms->PushBefore(tmp.monoms->GetpCurrent()->key, cop.monoms->GetpCurrent()->key, cop.monoms->GetpCurrent()->data);
+		if ((tmp.monoms->GetpCurrent()->data + cop.monoms->GetpCurrent()->data) != 0) {
+				tmp.monoms->PushBefore(tmp.monoms->GetpCurrent()->key, cop.monoms->GetpCurrent()->key, cop.monoms->GetpCurrent()->data);
+		}
+
 		cop.monoms->Next();
 	}
 
-	tmp.CastToDefault();
 	return tmp;
 };
 
@@ -242,48 +242,33 @@ TPolinom TPolinom::operator-(const TPolinom& cop){
 	return *this + (-tmp);
 };
 
-TPolinom TPolinom::operator*(const TPolinom& cop){
-	TPolinom tmp;
-	cop.monoms->Reset();
+TPolinom TPolinom::operator*(const TPolinom& tmp){
+	TPolinom res;
 
-	while (!cop.monoms->End()){
-		this->monoms->Reset();
-
-		while (!this->monoms->End()){
-			float cofficient = this->monoms->GetpCurrent()->data * cop.monoms->GetpCurrent()->data;
-
-			int degreeX = this->monoms->GetpCurrent()->key / 100;
-			int degreeY = (this->monoms->GetpCurrent()->key / 10) % 10;
-			int degreeZ = this->monoms->GetpCurrent()->key % 10;
-
-			int copyDegreeX = cop.monoms->GetpCurrent()->key / 100;
-			int copyDegreeY = (cop.monoms->GetpCurrent()->key / 10) % 10;
-			int copyDegreeZ = cop.monoms->GetpCurrent()->key % 10;
-
-			if (((degreeX + copyDegreeX) > 9) || ((degreeY + copyDegreeY) > 9)
-				|| ((degreeZ + copyDegreeZ) > 9))
-				throw Exception("некорректные степени");
-
-			int key = (degreeX + copyDegreeX) * 100 +
-				(degreeY + copyDegreeY) * 10 + (degreeZ + copyDegreeZ);
-
-			tmp.monoms->PushEnd(key, cofficient);
-			this->monoms->Next();
+	monoms->Reset();
+	while (!monoms->End()){
+		tmp.monoms->Reset();
+		while (!tmp.monoms->End()){
+			TNode<int, float>* _res;
+			_res = *tmp.monoms->GetpCurrent() * *monoms->GetpCurrent();
+			res.monoms->PushEnd(_res->key, _res->data);
+			tmp.monoms->Next();
 		}
-		cop.monoms->Next();
+		monoms->Next();
 	}
 
 	this->monoms->Reset();
-	cop.monoms->Reset();
 	tmp.monoms->Reset();
-	tmp.CastToDefault();
-	return tmp;
+	res.monoms->Reset();
+	res.CastToDefault();
+	return res;
+
 };
 
 TPolinom TPolinom::operator-(){
 	TPolinom tmp(*this);
 	while (!tmp.monoms->End()){
-		tmp.monoms->GetpCurrent()->data *= -1;
+		*tmp.monoms->GetpCurrent() = - *tmp.monoms->GetpCurrent();
 		tmp.monoms->Next();
 	}
 
@@ -303,7 +288,7 @@ ostream& operator<<(ostream& _out, TPolinom& _p){
 	_p.monoms->Reset();
 
 	if (_p.monoms->End()){
-		_out << "Полином пуст :(" << endl;
+		_out << "РџРѕР»РёРЅРѕРј РїСѓСЃС‚ :(" << endl;
 		return _out;
 	}
 

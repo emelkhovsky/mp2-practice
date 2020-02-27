@@ -17,8 +17,39 @@ public:
 		data = 0;
 		pNext = NULL;
 	}
+	bool operator<(const TNode&) const;
+	TNode<int, float>* operator*(const TNode&);
+	TNode<int, float> operator-();
 	bool operator==(const TNode&) const;
 	bool operator!=(const TNode&) const;
+};
+bool TNode<int, float>::operator<(const TNode& tmp) const{
+	return (this->key < tmp.key);
+};
+
+TNode<int, float> TNode<int, float>::operator-() {
+	this->data = -this->data;
+	return *this;
+};
+
+TNode<int, float>* TNode<int, float>::operator*(const TNode& tmp){
+	TNode<int, float>* res = new TNode<int, float>();
+
+	int degreeX = tmp.key / 100;
+	int degreeY = (tmp.key % 100) / 10;
+	int degreeZ = tmp.key % 10;
+
+	int tmpdegreeX = key / 100;
+	int tmpdegreeY = (key % 100) / 10;
+	int tmpdegreeZ = key % 10;
+
+	if ((degreeX + tmpdegreeX > 9) || ((degreeY + tmpdegreeY > 9) || (degreeZ + tmpdegreeZ > 9))){
+		throw Exception("Степень превышает 9, попробуйте поменьше");
+	};
+
+	res->key = key + tmp.key;
+	res->data = data * tmp.data;
+	return res;
 };
 bool TNode<int, float>::operator==(const TNode& node) const{
 	return ((this->key == node.key) && (this->data == node.data));

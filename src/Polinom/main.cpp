@@ -7,6 +7,7 @@ using namespace std;
 
 void main(){
 	setlocale(LC_ALL, "Rus");
+	char c;
 	try{
 		cout << "--------------------------ÑÎÇÄÀÍÈÅ--------------------------" << endl;
 		TNode<int, float>* monom3 = new TNode<int, float>(123, 5);
@@ -18,13 +19,12 @@ void main(){
 
 		string str1 = "5x^3 + 12y^3 - 21z^3 + 10y^4z^1";
 		TPolinom stringPolinom1(str1);
-		cout << "ÊÎÏÈÐÎÂÀÍÈÅ1" << stringPolinom1 << endl;
+		cout << "ÊÎÏÈÐÎÂÀÍÈÅ 1: " << stringPolinom1 << endl;
 
 		TPolinom copyPolinom(create_by_monom);
-		cout << "ÊÎÏÈÐÎÂÀÍÈÅ2" << copyPolinom << endl;
+		cout << "ÊÎÏÈÐÎÂÀÍÈÅ 2: " << copyPolinom << endl;
 	}
-	catch (Exception ex)
-	{
+	catch (Exception ex){
 		cout << ex.what() << endl << endl;
 	}
 
@@ -89,5 +89,7 @@ void main(){
 	catch (Exception ex){
 		cout << ex.what() << endl << endl;
 	}
-	system("pause");
+	cin >> c;
+
+
 }

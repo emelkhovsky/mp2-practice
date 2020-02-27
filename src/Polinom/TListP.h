@@ -3,6 +3,7 @@
 #include <iostream>
 #include "TList.h"
 #include "TNodeP.h"
+#include "TNode.h"
 #include "exceptions.h"
 
 template<>
