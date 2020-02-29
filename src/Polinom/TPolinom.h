@@ -51,9 +51,13 @@ TPolinom::TPolinom(const string& st){
 		bool x_flag = false; 
 		bool y_flag = false; 
 		bool z_flag = false; 
+		bool one_cofficient_flag = true;
+		bool exist_cofficient_flag = false;
+		bool f = 0;
 		
 		while (!((static_cast<char>(st[kol]) =='+')|| (static_cast<char>(st[kol]) == '-')) && (kol < st.length())){
 			char symbol = static_cast<char>(st[kol]);
+			
 			if (symbol == ' '){
 				kol++;
 				continue;
@@ -66,6 +70,7 @@ TPolinom::TPolinom(const string& st){
 			if (isdigit(symbol) && cofficient_flag && !point && !degree_flag){
 				cofficient = cofficient * 10 + static_cast<int>(symbol) - 48;
 				kol++;
+				exist_cofficient_flag = true;
 				continue;
 			}
 			if (isdigit(symbol) && cofficient_flag && point && !degree_flag){
@@ -79,39 +84,78 @@ TPolinom::TPolinom(const string& st){
 				}
 				cofficient = cofficient + ex;
 				kol++;
+				exist_cofficient_flag = true;
 				continue;
 			}
 
+			if ((symbol == 'x' || symbol == 'y' || symbol == 'z') & !exist_cofficient_flag) {//если коэф. = 1
+				cofficient = 1;
+				exist_cofficient_flag = true;
+			}
+
+
+			if ( (symbol == 'x' || symbol == 'y' || symbol == 'z') & (static_cast<char>(st[kol+1]) != '^') ) {
+				if (symbol == 'x') {
+					degree = degree + 100;
+				}
+				if (symbol == 'y') {
+					degree = degree + 10;
+				}
+				if (symbol == 'z') {
+					degree = degree + 1;
+				}
+			}
+
+
 			if (symbol == 'x'){
-				x_flag = true;
+				if (static_cast<char>(st[kol + 1]) != '^') {
+					x_flag = false;
+				}
+				else {
+					x_flag = true;
+				}
+				
 				y_flag = false;
 				z_flag = false;
 				degree_flag = false;
 				cofficient_flag = false;
 				point = false;
 				kol++;
+
 				continue;
 			}
 			if (symbol == 'y'){
 				x_flag = false;
-				y_flag = true;
+				if (static_cast<char>(st[kol + 1]) != '^') {
+					y_flag = false;
+				}
+				else {
+					y_flag = true;
+				}
 				z_flag = false;
 				degree_flag = false;
 				cofficient_flag = false;
 				point = false;
 				kol++;
+
 				continue;
 			}
 			if (symbol == 'z'){
 				x_flag = false;
 				y_flag = false;
-				z_flag = true;
+				if (static_cast<char>(st[kol + 1]) != '^') {
+					z_flag = false;
+				}
+				else {
+					z_flag = true;
+				}
 				degree_flag = false;
 				cofficient_flag = false;
 				point = false;
 				kol++;
 				continue;
 			}
+
 
 			if (symbol == '^'){
 				if (!(x_flag || y_flag || z_flag)) {
@@ -121,6 +165,7 @@ TPolinom::TPolinom(const string& st){
 				kol++;
 				continue;
 			}
+			
 
 			if (degree_flag){
 				if (!(x_flag || y_flag || z_flag)) {
@@ -211,30 +256,50 @@ const TPolinom& TPolinom::operator=(const TPolinom& cop){
 	return *this;
 };
 
-TPolinom TPolinom::operator+(const TPolinom& cop){
-	TPolinom tmp(*this);
-	cop.monoms->Reset();
+TPolinom TPolinom::operator+(const TPolinom& tmp){
+	TPolinom res;
 
-	while (!cop.monoms->End()){
-		tmp.monoms->Reset();
-		while (!(tmp.monoms->End()) && (tmp.monoms->GetpCurrent()->key <= cop.monoms->GetpCurrent()->key)) {
+	tmp.monoms->Reset();
+	monoms->Reset();
+
+	while (!tmp.monoms->End() && !monoms->End())
+	{
+		if (monoms->GetpCurrent()->key < tmp.monoms->GetpCurrent()->key)
+		{
+			res.monoms->PushEnd(monoms->GetpCurrent()->key, monoms->GetpCurrent()->data);
+			monoms->Next();
+		}
+		else if (monoms->GetpCurrent()->key > tmp.monoms->GetpCurrent()->key)
+		{
+			res.monoms->PushEnd(tmp.monoms->GetpCurrent()->key, tmp.monoms->GetpCurrent()->data);
 			tmp.monoms->Next();
 		}
-
-		if (!tmp.monoms->GetpCurrent()){//если мы не дошли до конца
-			tmp.monoms->PushEnd(cop.monoms->GetpCurrent()->key, cop.monoms->GetpCurrent()->data);
-			cop.monoms->Next();
-			continue;
+		else
+		{
+			if ((tmp.monoms->GetpCurrent()->data + monoms->GetpCurrent()->data) != 0)
+				res.monoms->PushEnd(tmp.monoms->GetpCurrent()->key, tmp.monoms->GetpCurrent()->data + monoms->GetpCurrent()->data);
+			tmp.monoms->Next();
+			monoms->Next();
 		}
-		//
-		if ((tmp.monoms->GetpCurrent()->data + cop.monoms->GetpCurrent()->data) != 0) {
-				tmp.monoms->PushBefore(tmp.monoms->GetpCurrent()->key, cop.monoms->GetpCurrent()->key, cop.monoms->GetpCurrent()->data);
-		}
-
-		cop.monoms->Next();
+		res.monoms->Reset();
 	}
 
-	return tmp;
+	while (!tmp.monoms->End())
+	{
+		res.monoms->PushEnd(tmp.monoms->GetpCurrent()->key, tmp.monoms->GetpCurrent()->data);
+		tmp.monoms->Next();
+	}
+
+	while (!monoms->End())
+	{
+		res.monoms->PushEnd(monoms->GetpCurrent()->key, monoms->GetpCurrent()->data);
+		monoms->Next();
+	}
+
+	monoms->Reset();
+	res.monoms->Reset();
+
+	return res;
 };
 
 TPolinom TPolinom::operator-(const TPolinom& cop){
@@ -292,7 +357,10 @@ ostream& operator<<(ostream& _out, TPolinom& _p){
 		return _out;
 	}
 
-	_out << _p.monoms->GetpCurrent()->data;
+	if (_p.monoms->GetpCurrent()->data != 1) {
+		_out << _p.monoms->GetpCurrent()->data;
+	}
+
 
 	if (_p.monoms->GetpCurrent()->key / 100 != 0)
 		_out << "x^(" << int(_p.monoms->GetpCurrent()->key / 100) << ")";
@@ -304,10 +372,19 @@ ostream& operator<<(ostream& _out, TPolinom& _p){
 	_p.monoms->Next();
 
 	while (!_p.monoms->End()){
-		if (_p.monoms->GetpCurrent()->data > 0)
-			_out << " + " << _p.monoms->GetpCurrent()->data;
-		if (_p.monoms->GetpCurrent()->data < 0)
-			_out << " - " << abs(_p.monoms->GetpCurrent()->data);
+		if (_p.monoms->GetpCurrent()->data != 1) {
+			if (_p.monoms->GetpCurrent()->data > 0)
+				_out << " + " << _p.monoms->GetpCurrent()->data;
+			if (_p.monoms->GetpCurrent()->data < 0)
+				_out << " - " << abs(_p.monoms->GetpCurrent()->data);
+		}
+		else {
+			if (_p.monoms->GetpCurrent()->data > 0)
+				_out << " + ";
+			if (_p.monoms->GetpCurrent()->data < 0)
+				_out << " - ";
+		}
+
 
 		if (_p.monoms->GetpCurrent()->key / 100 != 0)
 			_out << "x^(" << int(_p.monoms->GetpCurrent()->key / 100) << ")";

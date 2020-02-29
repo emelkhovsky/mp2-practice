@@ -42,8 +42,8 @@ void main(){
 
 	try{
 		cout << "--------------------------ÑËÎÆÅÍÈÅ--------------------------" << endl;
-		TPolinom polinom1("5x^2 + 15y^2z^3");
-		TPolinom polinom2("10z^2 - 8y^2z^3");
+		TPolinom polinom1("-2 +5x^2y + z -yz +x^2yz");
+		TPolinom polinom2("2+y -2z +x^2y");
 		cout << "ñêëàäûâàåì "<< polinom1 << " c " << polinom2 << endl;
 		TPolinom sum = polinom1 + polinom2;
 		cout << "ðåçóëüòàò:" << sum << endl;
@@ -54,8 +54,8 @@ void main(){
 
 	try{
 		cout << "--------------------------ÂÛ×ÈÒÀÍÈÅ--------------------------" << endl;
-		TPolinom polinom1("5x^2 + 15y^2z^3");
-		TPolinom polinom2("10z^2 - 8y^2z^3");
+		TPolinom polinom1("-2 +5x^2y + z -yz +x^2yz");
+		TPolinom polinom2("2+y -2z +x^2y");
 		cout << "âû÷èòàåì èç: " << polinom1 << " -> " << polinom2 << endl;
 		TPolinom rez = polinom1 - polinom2;
 		cout << "ðåçóëüòàò:" << rez << endl;
@@ -66,8 +66,8 @@ void main(){
 
 	try{
 		cout << "--------------------------ÓÌÍÎÆÅÍÈÅ--------------------------" << endl;
-		TPolinom polinom1("5x^2 + 15y^2z^3 + 6x^2y^2z^2");
-		TPolinom polinom2("10z^2 - 8y^2z^4");
+		TPolinom polinom1("-2 +5x^2y + z -yz +x^2yz");
+		TPolinom polinom2("2+y -2z +x^2y");
 		cout << "óìíîæèì " << polinom1 << " íà " << polinom2 << endl;
 		TPolinom rez2 = polinom1 * polinom2;
 		cout << "ðåçóëüòàò:" << rez2 << endl;
