@@ -3,6 +3,7 @@
 #include "exceptions.h"
 #include <iostream>
 #include <conio.h>
+#include <string>
 using namespace std;
 
 void main(){
@@ -87,6 +88,69 @@ void main(){
 		cout << "ðåçóëüòàò:" << (polinom3 == polinom2) << endl;
 	}
 	catch (Exception ex){
+		cout << ex.what() << endl << endl;
+	}
+
+	cout << "--------------------------ÑÎÇÄÀÍÈÅ ÂÀØÅÃÎ ÏÎËÈÍÎÌÀ--------------------------" << endl;
+	string your_string1;
+	string your_string2;
+	cout << "Ââåäèòå 1ûé ïîëèíîì: " << endl;
+	getline(cin, your_string1);
+	cout << "Ââåäèòå 2îé ïîëèíîì: " << endl;
+	getline(cin, your_string2);
+	TPolinom your_polinom1(your_string1);
+	TPolinom your_polinom2(your_string2);
+
+	cout << "1ûé ïîëèíîì: " << your_polinom1 << endl;
+	cout << "2îé ïîëèíîì: " << your_polinom2 << endl;
+
+	try {
+		cout << "--------------------------ÏÐÈÐÀÂÍÈÂÀÍÈÅ--------------------------" << endl;
+		cout << your_polinom1 << endl;
+		cout << "Ïðèðàâíÿëè ïîëèíîì ê äðóãîìó:" << endl;
+		TPolinom new_pol = your_polinom1;
+		cout << "Íîâûé ðàâåí:" << new_pol << endl;
+	}
+	catch (Exception ex) {
+		cout << ex.what() << endl << endl;
+	}
+
+	try {
+		cout << "--------------------------ÑËÎÆÅÍÈÅ--------------------------" << endl;
+		cout << "ñêëàäûâàåì " << your_polinom1 << " c " << your_polinom2 << endl;
+		TPolinom sum = your_polinom1 + your_polinom2;
+		cout << "ðåçóëüòàò:" << sum << endl;
+	}
+	catch (Exception ex) {
+		cout << ex.what() << endl << endl;
+	}
+
+	try {
+		cout << "--------------------------ÂÛ×ÈÒÀÍÈÅ--------------------------" << endl;
+		cout << "âû÷èòàåì èç: " << your_polinom1 << " -> " << your_polinom2 << endl;
+		TPolinom rez = your_polinom1 - your_polinom2;
+		cout << "ðåçóëüòàò:" << rez << endl;
+	}
+	catch (Exception ex) {
+		cout << ex.what() << endl << endl;
+	}
+
+	try {
+		cout << "--------------------------ÓÌÍÎÆÅÍÈÅ--------------------------" << endl;
+		cout << "óìíîæèì " << your_polinom1 << " íà " << your_polinom2 << endl;
+		TPolinom rez2 = your_polinom1 * your_polinom2;
+		cout << "ðåçóëüòàò:" << rez2 << endl;
+	}
+	catch (Exception ex) {
+		cout << ex.what() << endl << endl;
+	}
+
+	try {
+		cout << "--------------------------ÐÀÂÅÍÑÒÂÎ--------------------------" << endl;
+		cout << "ðàâåíñòâî " << your_polinom1 << " è " << your_polinom2 << endl;
+		cout << "ðåçóëüòàò:" << (your_polinom1 == your_polinom2) << endl;
+	}
+	catch (Exception ex) {
 		cout << ex.what() << endl << endl;
 	}
 	cin >> c;
