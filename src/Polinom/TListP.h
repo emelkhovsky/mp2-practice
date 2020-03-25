@@ -1,4 +1,4 @@
-#ifndef _TLISTP_H_
+п»ї#ifndef _TLISTP_H_
 #define _TLISTP_H_
 #include <iostream>
 #include "TList.h"
@@ -9,419 +9,419 @@
 template<>
 class TList<int, float> {
 private:
-	TNode<int, float>* pFirst;
-	TNode<int, float>* pCurrent;
-	TNode<int, float>* pNext;
-	TNode<int, float>* pPrev;
+    TNode<int, float>* pFirst;
+    TNode<int, float>* pCurrent;
+    TNode<int, float>* pNext;
+    TNode<int, float>* pPrev;
 public:
-	TList();
-	TList(const TList&);
-	TList(const TNode<int, float>*);
-	~TList();
-	void Reset();
-	void Next();
-	bool End() const;
-	TNode<int, float>* GetpFirst() const;
-	TNode<int, float>* GetpCurrent() const;
-	TNode<int, float>* Search(int);
-	void PushBegin(int, float);
-	void PushEnd(int, float);
-	void PushBefore(int, int, float);
-	void PushAfter(int, int, float);
-	void Remove(int);
-	void Sort();
-	bool operator==(const TList&) const;
-	bool operator!=(const TList&) const;
-	friend ostream& operator<<(ostream&, TList<int, float>&);
+    TList();
+    TList(const TList&);
+    TList(const TNode<int, float>*);
+    ~TList();
+    void Reset();
+    void Next();
+    bool End() const;
+    TNode<int, float>* GetpFirst() const;
+    TNode<int, float>* GetpCurrent() const;
+    TNode<int, float>* Search(int);
+    void PushBegin(int, float);
+    void PushEnd(int, float);
+    void PushBefore(int, int, float);
+    void PushAfter(int, int, float);
+    void Remove(int);
+    void Sort();
+    bool operator==(const TList&) const;
+    bool operator!=(const TList&) const;
+    friend ostream& operator<<(ostream&, TList<int, float>&);
 };
 
 
 TList<int, float>::TList() {
-	pFirst = NULL;
-	pNext = NULL;
-	pPrev = NULL;
-	pCurrent = NULL;
+    pFirst = NULL;
+    pNext = NULL;
+    pPrev = NULL;
+    pCurrent = NULL;
 };
 
 TList<int, float>::TList(const TList& list) {
-	pNext = NULL;
-	pPrev = NULL;
-	pCurrent = NULL;
+    pNext = NULL;
+    pPrev = NULL;
+    pCurrent = NULL;
 
-	if (!list.pFirst) {
-		pFirst = NULL;
-	}
-	else {
-		pFirst = new TNode<int, float>(*list.pFirst);//создали копию указател¤ на первый		
-		pCurrent = pFirst;
-		TNode<int, float>* tmp = list.pFirst;//в тмп кладем указатель на первый от того, который мы копируем
+    if (!list.pFirst) {
+        pFirst = NULL;
+    }
+    else {
+        pFirst = new TNode<int, float>(*list.pFirst);//СЃРѕР·РґР°Р»Рё РєРѕРїРёСЋ СѓРєР°Р·Р°С‚РµР»В§ РЅР° РїРµСЂРІС‹Р№        
+        pCurrent = pFirst;
+        TNode<int, float>* tmp = list.pFirst;//РІ С‚РјРї РєР»Р°РґРµРј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРІС‹Р№ РѕС‚ С‚РѕРіРѕ, РєРѕС‚РѕСЂС‹Р№ РјС‹ РєРѕРїРёСЂСѓРµРј
 
-		while (tmp->pNext) {//создаем цепочку из tmp
-			tmp = tmp->pNext;
-			pCurrent->pNext = new TNode<int, float>(*tmp);//параллельно с этим создаем цепочку из tmp
-			pPrev = pCurrent;//в предыдущий кладем прошлый текущий
-			pCurrent = pCurrent->pNext;//текущий теперь смещаетс¤ дальше
-			pNext = NULL;//следующего у нас уже нет
-		}
-		pPrev = NULL;//когда закончили с цепочкой предыдущего у нас нет(мы сейчас на первом как бы)
-		pCurrent = pFirst;//текцщий-первый
-		pNext = pFirst->pNext;
-	}
+        while (tmp->pNext) {//СЃРѕР·РґР°РµРј С†РµРїРѕС‡РєСѓ РёР· tmp
+            tmp = tmp->pNext;
+            pCurrent->pNext = new TNode<int, float>(*tmp);//РїР°СЂР°Р»Р»РµР»СЊРЅРѕ СЃ СЌС‚РёРј СЃРѕР·РґР°РµРј С†РµРїРѕС‡РєСѓ РёР· tmp
+            pPrev = pCurrent;//РІ РїСЂРµРґС‹РґСѓС‰РёР№ РєР»Р°РґРµРј РїСЂРѕС€Р»С‹Р№ С‚РµРєСѓС‰РёР№
+            pCurrent = pCurrent->pNext;//С‚РµРєСѓС‰РёР№ С‚РµРїРµСЂСЊ СЃРјРµС‰Р°РµС‚СЃВ§ РґР°Р»СЊС€Рµ
+            pNext = NULL;//СЃР»РµРґСѓСЋС‰РµРіРѕ Сѓ РЅР°СЃ СѓР¶Рµ РЅРµС‚
+        }
+        pPrev = NULL;//РєРѕРіРґР° Р·Р°РєРѕРЅС‡РёР»Рё СЃ С†РµРїРѕС‡РєРѕР№ РїСЂРµРґС‹РґСѓС‰РµРіРѕ Сѓ РЅР°СЃ РЅРµС‚(РјС‹ СЃРµР№С‡Р°СЃ РЅР° РїРµСЂРІРѕРј РєР°Рє Р±С‹)
+        pCurrent = pFirst;//С‚РµРєС†С‰РёР№-РїРµСЂРІС‹Р№
+        pNext = pFirst->pNext;
+    }
 };
 
 TList<int, float>::TList(const TNode<int, float>* first) {
-	pNext = pPrev = pCurrent = NULL;
-	if (!first)
-		pFirst = NULL;
-	else{
-		TNode<int, float>* node = new TNode<int, float>(*first);
-		pFirst = node;
-		TNode<int, float>* tmp = first->pNext;
-		TNode<int, float>* prev = pFirst;
-		while (tmp)
-		{
-			TNode<int, float>* n = new TNode<int, float>(*tmp);
-			prev->pNext = n;
-			prev = n;
-			tmp = tmp->pNext;
-		}
-		pCurrent = pFirst;
-		pNext = pCurrent->pNext;
-	}
+    pNext = pPrev = pCurrent = NULL;
+    if (!first)
+        pFirst = NULL;
+    else{
+        TNode<int, float>* node = new TNode<int, float>(*first);
+        pFirst = node;
+        TNode<int, float>* tmp = first->pNext;
+        TNode<int, float>* prev = pFirst;
+        while (tmp)
+        {
+            TNode<int, float>* n = new TNode<int, float>(*tmp);
+            prev->pNext = n;
+            prev = n;
+            tmp = tmp->pNext;
+        }
+        pCurrent = pFirst;
+        pNext = pCurrent->pNext;
+    }
 };
 
 TList<int, float>::~TList() {
-	this->Reset();
-	while (!this->End()) {
-		this->Next();
-		delete pPrev;
-	}
-	delete pCurrent;
-	pFirst = NULL;
-	pNext = NULL;
-	pPrev = NULL;
-	pCurrent = NULL;
+    this->Reset();
+    while (!this->End()) {
+        this->Next();
+        delete pPrev;
+    }
+    delete pCurrent;
+    pFirst = NULL;
+    pNext = NULL;
+    pPrev = NULL;
+    pCurrent = NULL;
 };
 
 
-void TList<int, float>::Reset() {//переводит текущий  на первый
-	pPrev = NULL;
-	pCurrent = pFirst;
-	if (pFirst) {
-		pNext = pCurrent->pNext;
-	}
-	else {
-		pNext = NULL;
-	}
+void TList<int, float>::Reset() {//РїРµСЂРµРІРѕРґРёС‚ С‚РµРєСѓС‰РёР№  РЅР° РїРµСЂРІС‹Р№
+    pPrev = NULL;
+    pCurrent = pFirst;
+    if (pFirst) {
+        pNext = pCurrent->pNext;
+    }
+    else {
+        pNext = NULL;
+    }
 };
 
 
-void TList<int, float>::Next() {//сдвиг вправо
-	pPrev = pCurrent;
-	pCurrent = pNext;
-	if (pCurrent) {
-		pNext = pCurrent->pNext;
-	}
-	else {
-		pNext = NULL;
-	}
+void TList<int, float>::Next() {//СЃРґРІРёРі РІРїСЂР°РІРѕ
+    pPrev = pCurrent;
+    pCurrent = pNext;
+    if (pCurrent) {
+        pNext = pCurrent->pNext;
+    }
+    else {
+        pNext = NULL;
+    }
 };
 
 bool TList<int, float>::End() const {
-	return (pCurrent == NULL);
+    return (pCurrent == NULL);
 };
 
 TNode<int, float>* TList<int, float>::GetpFirst() const {
-	return pFirst;
+    return pFirst;
 };
 
 TNode<int, float>* TList<int, float>::GetpCurrent() const{
-	return pCurrent;
+    return pCurrent;
 };
 
 
 TNode<int, float>* TList<int, float>::Search(int key_value) {
-	TNode<int, float>* tmppCurrent = pCurrent;
-	TNode<int, float>* tmppNext = pNext;
-	TNode<int, float>* tmppPrev = pPrev;
-	this->Reset();
+    TNode<int, float>* tmppCurrent = pCurrent;
+    TNode<int, float>* tmppNext = pNext;
+    TNode<int, float>* tmppPrev = pPrev;
+    this->Reset();
 
-	while (!this->End() && (key_value != pCurrent->key)) {
-		this->Next();
-	}
-	TNode<int, float>* node = this->pCurrent;
-	pCurrent = tmppCurrent;
-	pNext = tmppNext;
-	pPrev = tmppPrev;
-	return node;
+    while (!this->End() && (key_value != pCurrent->key)) {
+        this->Next();
+    }
+    TNode<int, float>* node = this->pCurrent;
+    pCurrent = tmppCurrent;
+    pNext = tmppNext;
+    pPrev = tmppPrev;
+    return node;
 };
 
 void TList<int, float>::PushBegin(int key_value, float data_value) {
-	if (pFirst == nullptr) {
-		pFirst = new TNode<int, float>(key_value, data_value);
-		pCurrent = pFirst;
-		return;
-	};
-	TNode<int, float>* node = new TNode<int, float>(key_value, data_value, pFirst);
-	node->pNext = pFirst;
-	if (pCurrent == pFirst)
-		pPrev = node;
-	pFirst = node;
+    if (pFirst == nullptr) {
+        pFirst = new TNode<int, float>(key_value, data_value);
+        pCurrent = pFirst;
+        return;
+    };
+    TNode<int, float>* node = new TNode<int, float>(key_value, data_value, pFirst);
+    node->pNext = pFirst;
+    if (pCurrent == pFirst)
+        pPrev = node;
+    pFirst = node;
 };
 
 void TList<int, float>::PushEnd(int key_value, float data_value) {
-	TNode<int, float>* tmppCurrent = pCurrent;
-	TNode<int, float>* tmppNext = pNext;
-	TNode<int, float>* tmppPrev = pPrev;
-	this->Reset();
-	while (pNext)
-		this->Next();
-	TNode<int, float>* node = new TNode<int, float>(key_value, data_value);//в конец добавили
+    TNode<int, float>* tmppCurrent = pCurrent;
+    TNode<int, float>* tmppNext = pNext;
+    TNode<int, float>* tmppPrev = pPrev;
+    this->Reset();
+    while (pNext)
+        this->Next();
+    TNode<int, float>* node = new TNode<int, float>(key_value, data_value);//РІ РєРѕРЅРµС† РґРѕР±Р°РІРёР»Рё
 
-	if (!pFirst) {
-		pFirst = node;
-	}
-	else {
-		pCurrent->pNext = node;
-	}
+    if (!pFirst) {
+        pFirst = node;
+    }
+    else {
+        pCurrent->pNext = node;
+    }
 
-	if (tmppCurrent == pCurrent) {//если у нас всего один элемент
-		pNext = node;
-	}
-	else {
-		pNext = tmppNext;
-	}
-	pCurrent = tmppCurrent;
-	pPrev = tmppPrev;
+    if (tmppCurrent == pCurrent) {//РµСЃР»Рё Сѓ РЅР°СЃ РІСЃРµРіРѕ РѕРґРёРЅ СЌР»РµРјРµРЅС‚
+        pNext = node;
+    }
+    else {
+        pNext = tmppNext;
+    }
+    pCurrent = tmppCurrent;
+    pPrev = tmppPrev;
 };
 
-void TList<int, float>::PushBefore(int nkey, int key_value, float data_value) {//вставка до
-	TNode<int, float>* tmppCurrent = pCurrent;
-	TNode<int, float>* tmppNext = pNext;
-	TNode<int, float>* tmppPrev = pPrev;
-	this->Reset();
+void TList<int, float>::PushBefore(int nkey, int key_value, float data_value) {//РІСЃС‚Р°РІРєР° РґРѕ
+    TNode<int, float>* tmppCurrent = pCurrent;
+    TNode<int, float>* tmppNext = pNext;
+    TNode<int, float>* tmppPrev = pPrev;
+    this->Reset();
 
-	if ((this->End()) || (pFirst->key == nkey)) {
-		this->PushBegin(key_value, data_value);
-		pCurrent = pFirst;
-		return;
-	}
+    if ((this->End()) || (pFirst->key == nkey)) {
+        this->PushBegin(key_value, data_value);
+        pCurrent = pFirst;
+        return;
+    }
 
-	TNode<int, float>* node_search = Search(nkey);
-	if (!node_search) {
-		throw Exception("Ваш ключ не найден:(");
-		return;
-	}
+    TNode<int, float>* node_search = Search(nkey);
+    if (!node_search) {
+        throw Exception("В¬Р°С€ РєР»СЋС‡ РЅРµ РЅР°Р№РґРµРЅ:(");
+        return;
+    }
 
-	while (pCurrent != node_search)
-		this->Next();
+    while (pCurrent != node_search)
+        this->Next();
 
-	TNode<int, float>* node = new TNode<int, float>(key_value, data_value, pCurrent);
-	pPrev->pNext = node;
+    TNode<int, float>* node = new TNode<int, float>(key_value, data_value, pCurrent);
+    pPrev->pNext = node;
 
-	if (tmppCurrent == pPrev) {
-		pNext = node;
-	}
-	else {
-		pNext = tmppNext;
-	}
+    if (tmppCurrent == pPrev) {
+        pNext = node;
+    }
+    else {
+        pNext = tmppNext;
+    }
 
-	if (tmppCurrent == pCurrent) {
-		pPrev = node;
-	}
-	else {
-		pPrev = tmppPrev;
-	}
+    if (tmppCurrent == pCurrent) {
+        pPrev = node;
+    }
+    else {
+        pPrev = tmppPrev;
+    }
 
-	pCurrent = tmppCurrent;
+    pCurrent = tmppCurrent;
 };
 
 void TList<int, float>::PushAfter(int nkey, int key_value, float data_value) {
-	TNode<int, float>* tmppCurrent = pCurrent;
-	TNode<int, float>* tmppNext = pNext;
-	TNode<int, float>* tmppPrev = pPrev;
-	this->Reset();
-	TNode<int, float>* node_search = Search(nkey);
+    TNode<int, float>* tmppCurrent = pCurrent;
+    TNode<int, float>* tmppNext = pNext;
+    TNode<int, float>* tmppPrev = pPrev;
+    this->Reset();
+    TNode<int, float>* node_search = Search(nkey);
 
-	if (!node_search) {
-		throw Exception("¬аш ключ не найден:(");
-		return;
-	}
+    if (!node_search) {
+        throw Exception("С’Р°С€ РєР»СЋС‡ РЅРµ РЅР°Р№РґРµРЅ:(");
+        return;
+    }
 
-	while (pCurrent != node_search)
-		this->Next();
+    while (pCurrent != node_search)
+        this->Next();
 
-	TNode<int, float>* node = new TNode<int, float>(key_value, data_value, pNext);
-	pCurrent->pNext = node;
+    TNode<int, float>* node = new TNode<int, float>(key_value, data_value, pNext);
+    pCurrent->pNext = node;
 
-	if (tmppCurrent == pCurrent) {
-		pNext = node;
-	}
-	else {
-		pNext = tmppNext;
-	}
-	if (tmppCurrent == pNext) {
-		pPrev = node;
-	}
-	else {
-		pPrev = tmppPrev;
-	}
+    if (tmppCurrent == pCurrent) {
+        pNext = node;
+    }
+    else {
+        pNext = tmppNext;
+    }
+    if (tmppCurrent == pNext) {
+        pPrev = node;
+    }
+    else {
+        pPrev = tmppPrev;
+    }
 
-	pCurrent = tmppCurrent;
+    pCurrent = tmppCurrent;
 };
 
-void TList<int, float>::Remove(int key_value) {//удаление
-	if (!pFirst)
-		throw Exception("—писок пуст:(");
+void TList<int, float>::Remove(int key_value) {//СѓРґР°Р»РµРЅРёРµ
+    if (!pFirst)
+        throw Exception("Р§РїРёСЃРѕРє РїСѓСЃС‚:(");
 
-	if (pFirst->key == key_value) {
-		if (pCurrent == pFirst) {//если первый
-			pCurrent = pNext;
-			if (pNext) {
-				pNext = pNext->pNext;
-			}
-			else {
-				pNext = NULL;
-			}
-			delete pFirst;
-			pFirst = pCurrent;
-			return;
-		}
+    if (pFirst->key == key_value) {
+        if (pCurrent == pFirst) {//РµСЃР»Рё РїРµСЂРІС‹Р№
+            pCurrent = pNext;
+            if (pNext) {
+                pNext = pNext->pNext;
+            }
+            else {
+                pNext = NULL;
+            }
+            delete pFirst;
+            pFirst = pCurrent;
+            return;
+        }
 
-		if (pCurrent == pFirst->pNext) {//если второй
-			pPrev = NULL;
-			delete pFirst;
-			pFirst = pCurrent;
-			return;
-		}
+        if (pCurrent == pFirst->pNext) {//РµСЃР»Рё РІС‚РѕСЂРѕР№
+            pPrev = NULL;
+            delete pFirst;
+            pFirst = pCurrent;
+            return;
+        }
 
-		delete pFirst;
-		return;
-	}
+        delete pFirst;
+        return;
+    }
 
-	TNode<int, float>* tmppCurrent = pCurrent;
-	TNode<int, float>* tmppPrev = pPrev;
-	TNode<int, float>* tmppNext = pNext;
-	this->Reset();
-	TNode<int, float>* node_search = Search(key_value);
+    TNode<int, float>* tmppCurrent = pCurrent;
+    TNode<int, float>* tmppPrev = pPrev;
+    TNode<int, float>* tmppNext = pNext;
+    this->Reset();
+    TNode<int, float>* node_search = Search(key_value);
 
-	if (!node_search) {
-		throw Exception("Ключ не найден:(");
-		return;
-	}
+    if (!node_search) {
+        throw Exception("В Р»СЋС‡ РЅРµ РЅР°Р№РґРµРЅ:(");
+        return;
+    }
 
-	while (pCurrent != node_search)
-		this->Next();
+    while (pCurrent != node_search)
+        this->Next();
 
-	pPrev->pNext = pNext;
+    pPrev->pNext = pNext;
 
-	if (tmppCurrent == pCurrent) {
-		pCurrent = tmppNext;
-		pNext = pCurrent->pNext;
-		delete node_search;
-		return;
-	}
+    if (tmppCurrent == pCurrent) {
+        pCurrent = tmppNext;
+        pNext = pCurrent->pNext;
+        delete node_search;
+        return;
+    }
 
-	if (tmppCurrent == pPrev) {
-		pCurrent = pPrev;
-		pPrev = tmppPrev;
-		pNext = pCurrent->pNext;
-		delete node_search;
-		return;
-	}
+    if (tmppCurrent == pPrev) {
+        pCurrent = pPrev;
+        pPrev = tmppPrev;
+        pNext = pCurrent->pNext;
+        delete node_search;
+        return;
+    }
 
-	if (tmppCurrent == pNext) {
-		pCurrent = pNext;
-		pNext = pCurrent->pNext;
-		delete node_search;
-		return;
-	}
+    if (tmppCurrent == pNext) {
+        pCurrent = pNext;
+        pNext = pCurrent->pNext;
+        delete node_search;
+        return;
+    }
 
-	pNext = tmppCurrent->pNext;
-	pCurrent = tmppCurrent;
-	delete node_search;
-	return;
+    pNext = tmppCurrent->pNext;
+    pCurrent = tmppCurrent;
+    delete node_search;
+    return;
 };
 
 void TList<int, float>::Sort(){
-	TNode<int, float>* last = new TNode<int, float>;
-	TNode<int, float>* tmpfirst = new TNode<int, float>;
-	bool first = true;
+    TNode<int, float>* last = new TNode<int, float>;
+    TNode<int, float>* tmpfirst = new TNode<int, float>;
+    bool first = true;
 
-	while (this->pFirst){
-		this->Reset();
-		TNode<int, float>* min = new TNode<int, float>;
-		min = pFirst;
+    while (this->pFirst){
+        this->Reset();
+        TNode<int, float>* min = new TNode<int, float>;
+        min = pFirst;
 
-		while (!this->End()){
-			if (pCurrent->key < min->key)
-				min = pCurrent;
-			this->Next();
-		}
+        while (!this->End()){
+            if (pCurrent->key < min->key)
+                min = pCurrent;
+            this->Next();
+        }
 
-		this->Reset();
-		while ((this->pCurrent != min) && (!this->End()))
-			this->Next();
+        this->Reset();
+        while ((this->pCurrent != min) && (!this->End()))
+            this->Next();
 
-		if (pCurrent == pFirst)//если первый
-			pFirst = pCurrent = pNext;
-		else if (pNext == NULL)//если последний
-			pPrev->pNext = NULL;//вместо текущего стал нул
-		else
-			pPrev->pNext = pNext;//склеиваем то, что по бокам от pCurrent
-		this->Reset();
+        if (pCurrent == pFirst)//РµСЃР»Рё РїРµСЂРІС‹Р№
+            pFirst = pCurrent = pNext;
+        else if (pNext == NULL)//РµСЃР»Рё РїРѕСЃР»РµРґРЅРёР№
+            pPrev->pNext = NULL;//РІРјРµСЃС‚Рѕ С‚РµРєСѓС‰РµРіРѕ СЃС‚Р°Р» РЅСѓР»
+        else
+            pPrev->pNext = pNext;//СЃРєР»РµРёРІР°РµРј С‚Рѕ, С‡С‚Рѕ РїРѕ Р±РѕРєР°Рј РѕС‚ pCurrent
+        this->Reset();
 
-		if (first){//заполнили начало
-			tmpfirst = min;
-			first = false;
-		}
-		else { 
-			last->pNext = min;//приделываем к концу списка
-		}
-		last = min;//и последний у нас и оказывается минимум
-	}
+        if (first){//Р·Р°РїРѕР»РЅРёР»Рё РЅР°С‡Р°Р»Рѕ
+            tmpfirst = min;
+            first = false;
+        }
+        else { 
+            last->pNext = min;//РїСЂРёРґРµР»С‹РІР°РµРј Рє РєРѕРЅС†Сѓ СЃРїРёСЃРєР°
+        }
+        last = min;//Рё РїРѕСЃР»РµРґРЅРёР№ Сѓ РЅР°СЃ Рё РѕРєР°Р·С‹РІР°РµС‚СЃВ¤ РјРёРЅРёРјСѓРј
+    }
 
-	last->pNext = NULL;
-	pFirst = tmpfirst;
-	pPrev = NULL;
-	pCurrent = pFirst;
-	pNext = pCurrent->pNext;
+    last->pNext = NULL;
+    pFirst = tmpfirst;
+    pPrev = NULL;
+    pCurrent = pFirst;
+    pNext = pCurrent->pNext;
 };
 
 
 bool TList<int, float>::operator==(const TList& _l) const{
-	TNode<int, float>* tmp1 = this->pFirst;
-	TNode<int, float>* tmp2 = _l.pFirst;
-	while (tmp1 && tmp2 && (*tmp1 == *tmp2)){
-		tmp1 = tmp1->pNext;
-		tmp2 = tmp2->pNext;
-	}
-	return (!(tmp1 || tmp2));
+    TNode<int, float>* tmp1 = this->pFirst;
+    TNode<int, float>* tmp2 = _l.pFirst;
+    while (tmp1 && tmp2 && (*tmp1 == *tmp2)){
+        tmp1 = tmp1->pNext;
+        tmp2 = tmp2->pNext;
+    }
+    return (!(tmp1 || tmp2));
 };
 
 bool TList<int, float>::operator!=(const TList& _l) const{
-	return (!(*this == _l));
+    return (!(*this == _l));
 };
 
 ostream& operator<<(ostream& _out, TList<int, float>& f_list) {
-	if (!f_list.pFirst) {
-		_out << "Список пуст:(" << endl;
-		return _out;;
-	}
+    if (!f_list.pFirst) {
+        _out << "вЂ”РїРёСЃРѕРє РїСѓСЃС‚:(" << endl;
+        return _out;;
+    }
 
-	TNode<int, float>* tmppCurrent = f_list.pCurrent;
-	TNode<int, float>* tmppNext = f_list.pNext;
-	TNode<int, float>* tmppPrev = f_list.pPrev;
-	f_list.Reset();
+    TNode<int, float>* tmppCurrent = f_list.pCurrent;
+    TNode<int, float>* tmppNext = f_list.pNext;
+    TNode<int, float>* tmppPrev = f_list.pPrev;
+    f_list.Reset();
 
-	while (!f_list.End()) {
-		_out << f_list.pCurrent->key << ", ";
-		f_list.Next();
-	}
-	f_list.pCurrent = tmppCurrent;
-	f_list.pNext = tmppNext;
-	f_list.pPrev = tmppPrev;
-	return _out;
+    while (!f_list.End()) {
+        _out << f_list.pCurrent->key << ", ";
+        f_list.Next();
+    }
+    f_list.pCurrent = tmppCurrent;
+    f_list.pNext = tmppNext;
+    f_list.pPrev = tmppPrev;
+    return _out;
 };
 
 #endif
